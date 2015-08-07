@@ -1,21 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="guessit.deevs.com.guessit" >
+    package="com.deevs.guessit" >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- Necessary for sharing of videos to Facebook -->
+    <provider android:authorities="com.facebook.app.FacebookContentProvider1137966712884548"
+        android:name="com.facebook.FacebookContentProvider"
+        android:exported="true" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <activity
-            android:name="com.deevs.guessit.FacebookLoginActivity"
-            android:label="@string/app_name" >
+            android:name=".activities.SplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <!-- Used for Facebook login -->
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name">
+        </activity>
+
+        <!-- Used for Facebook login screen -->
+        <activity
+            android:name="com.deevs.guessit.activities.FacebookLoginActivity"
+            android:label="@string/app_name">
+        </activity>
+
+        <!-- Required for use with Facebook SDK -->
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
+    </application>
 </manifest>
