@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.deevs.guessit.R;
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
 
 public class SplashActivity extends Activity {
 
@@ -22,9 +24,15 @@ public class SplashActivity extends Activity {
         final Runnable startNextActivityDelayed = new Runnable() {
             @Override
             public void run() {
-                Log.e(TAG, "Starting Facebook login Activity");
-                final Intent startLoginScreen = new Intent(getApplicationContext(), FacebookLoginActivity.class);
-                startActivity(startLoginScreen);
+                if(!FacebookSdk.isInitialized() || AccessToken.getCurrentAccessToken() == null) {
+                    final Intent startLoginScreen = new Intent(getApplicationContext(), FacebookLoginActivity.class);
+                    startActivity(startLoginScreen);
+                }
+                else {
+                    final Intent openMainMenu = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(openMainMenu);
+                }
+                finish();
             }
         };
         new Handler().postDelayed(startNextActivityDelayed, SPLASH_DURATION_MS);

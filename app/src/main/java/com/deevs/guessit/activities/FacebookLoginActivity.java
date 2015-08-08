@@ -27,6 +27,7 @@ public class FacebookLoginActivity extends FragmentActivity {
         // Initialize the SDK before executing any other operations,
         // especially, if you're using Facebook UI elements.
         FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.activity_facebook_login);
 
         Log.e(TAG, "onCreate: Starting Facebook login");
@@ -50,6 +51,7 @@ public class FacebookLoginActivity extends FragmentActivity {
                     }
                 };
                 new Handler().post(startNextActivityDelayed);
+                finish();
             }
 
             @Override

@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/default_text_style"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 app:font="Roboto-Black.ttf" />
     </LinearLayout>
 </RelativeLayout>
