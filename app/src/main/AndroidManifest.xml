@@ -46,6 +46,12 @@
             android:noHistory="true">
         </activity>
 
+        <!-- Game Lobby screen -->
+        <activity
+            android:name="com.deevs.guessit.activities.GameLobby"
+            android:label="@string/app_name">
+        </activity>
+
         <!-- Required for use with Facebook SDK -->
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
