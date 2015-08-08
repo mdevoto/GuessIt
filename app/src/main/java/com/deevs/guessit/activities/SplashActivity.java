@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.deevs.guessit.R;
-import com.facebook.FacebookActivity;
 
 public class SplashActivity extends Activity {
 
