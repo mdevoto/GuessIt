@@ -1,8 +1,16 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="activity_padding">
+        <item name="android:padding">@dimen/activity_default_margins</item>
+    </style>
+
+    <style name="default_text_style">
+        <item name="android:textColor">@color/white_main</item>
+        <item name="android:background">@color/pink_main</item>
+        <item name="android:padding">10dp</item>
+    </style>
 </resources>

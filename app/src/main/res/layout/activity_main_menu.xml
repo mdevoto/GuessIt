@@ -1,70 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/deep_orange_offwhite_pink">
+    style="@style/activity_padding"
+    android:background="@color/indigo_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/pink_main"
+        android:layout_centerInParent="true">
         
-        <TextView
-            android:layout_width="wrap_content"
+        <com.deevs.guessit.views.TypefaceTextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Guess It"
+            style="@style/default_text_style"
+            app:font="Roboto-Black.ttf"
+            android:gravity="center"
+            android:layout_gravity="top"
+            android:textSize="50dp"
+            android:textColor="@color/white_main"
+            android:clickable="false"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/indigo_main"/>
+
+        <com.deevs.guessit.views.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Game"
+            app:font="RobotoCondensed-Regular.ttf"
             android:gravity="center"
             android:layout_gravity="center"
-            android:textSize="42dp"
-            android:textColor="@color/deep_orange_offwhite"
-            android:layout_marginTop="80dp"
-            android:layout_marginBottom="80dp"
-            android:textStyle="bold|italic"/>
+            android:textSize="32dp"
+            android:textColor="@color/white_main"
+            style="@style/default_text_style"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create Game"
-        android:textStyle="italic"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:textSize="30dp"
-        android:textColor="@color/deep_orange_offwhite"/>
+        <com.deevs.guessit.views.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pending Invitations"
+            app:font="RobotoCondensed-Regular.ttf"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="32dp"
+            android:textColor="@color/white_main"
+            style="@style/default_text_style"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pending Invitations"
-        android:textStyle="italic"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:textSize="30dp"
-        android:textColor="@color/deep_orange_offwhite"/>
+        <com.deevs.guessit.views.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Friends List"
+            app:font="RobotoCondensed-Regular.ttf"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="32dp"
+            android:textColor="@color/white_main"
+            style="@style/default_text_style"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Friends List"
-        android:textStyle="italic"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:textSize="30dp"
-        android:textColor="@color/deep_orange_offwhite"/>
+        <com.deevs.guessit.views.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How to Play"
+            app:font="RobotoCondensed-Regular.ttf"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="32dp"
+            android:textColor="@color/white_main"
+            style="@style/default_text_style"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="How to Play"
-        android:textStyle="italic"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:textSize="30dp"
-        android:textColor="@color/deep_orange_offwhite"/>
+        <com.deevs.guessit.views.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            app:font="RobotoCondensed-Regular.ttf"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="32dp"
+            android:textColor="@color/white_main"
+            style="@style/default_text_style"/>
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:textStyle="italic"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:textSize="30dp"
-        android:textColor="@color/deep_orange_offwhite"/>
-
-</LinearLayout>
+</RelativeLayout>

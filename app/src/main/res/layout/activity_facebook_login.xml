@@ -1,31 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/deep_orange_offwhite_pink"
-    tools:context=".FacebookLoginActivity"
-    android:id="@+id/login_button_parent">
+    android:background="@color/indigo_main"
+    style="@style/activity_padding">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="28dp"
-        android:text="Welcome to Guess It"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:textStyle="italic"
-        android:textColor="@color/deep_orange_main"/>
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="18dp"/>
+        <com.deevs.guessit.views.TypefaceTextView
+            android:id="@+id/welcome_msg"
+            style="@style/default_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="Welcome to Guess It!"
+            android:textSize="42sp"
+            app:font="Roboto-Black.ttf" />
 
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/default_text_style"
+                android:textSize="20dp"
+                app:font="Roboto-Black.ttf" />
+    </LinearLayout>
 </RelativeLayout>

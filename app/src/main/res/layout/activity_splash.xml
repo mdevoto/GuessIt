@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/deep_orange_offwhite">
+    style="@style/activity_padding"
+    android:background="@color/indigo_main"
+    android:gravity="center">
 
-    <TextView
+    <com.deevs.guessit.views.TypefaceTextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="Deevs Inc."
+        app:font="Roboto-Black.ttf"
+        style="@style/default_text_style"
         android:textSize="48sp"
-        android:textStyle="bold|italic"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:textColor="@color/deep_orange_main"/>
-
+        android:padding="10dp"/>
 </LinearLayout>
