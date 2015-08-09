@@ -8,11 +8,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.deevs.guessit.R;
-import com.deevs.guessit.networking.NetworkManager;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -20,7 +18,11 @@ public class FacebookLoginActivity extends FragmentActivity {
 
     public static final String TAG = FacebookLoginActivity.class.getSimpleName();
 
-    private CallbackManager mCallbackMgr;
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +30,11 @@ public class FacebookLoginActivity extends FragmentActivity {
         setContentView(R.layout.activity_facebook_login);
 
         final LoginButton loginBtn = (LoginButton) findViewById(R.id.login_button);
-        mCallbackMgr = CallbackManager.Factory.create();
+        final CallbackManager callbackManager = CallbackManager.Factory.create();
 
         // Permission to read user's friends who have the application installed.
         loginBtn.setReadPermissions("user_friends");
-        loginBtn.registerCallback(mCallbackMgr, new FacebookCallback<LoginResult>() {
+        loginBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -62,7 +64,7 @@ public class FacebookLoginActivity extends FragmentActivity {
                         loginBtn.setEnabled(true);
                     }
                 };
-                new Handler().postDelayed(reenableLogin, 2000);
+                new Handler().postDelayed(reenableLogin, 3500);
 
                 // Show an error toast for failed login and do nothing..
                 Toast loginFailedToast = new Toast(getApplicationContext());
@@ -71,11 +73,5 @@ public class FacebookLoginActivity extends FragmentActivity {
                 loginFailedToast.show();
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mCallbackMgr.onActivityResult(requestCode, resultCode, data);
     }
 }
