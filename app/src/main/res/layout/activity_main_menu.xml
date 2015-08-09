@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="Guess It"
             style="@style/default_text_style"
-            app:font="RobotoCondensed-Bold.ttf"
+            app:font="Roboto-Black.ttf"
             android:layout_gravity="top"
             android:gravity="center"
             android:layout_marginBottom="16dp"
@@ -31,7 +31,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Create Game"
-            app:font="Roboto-Black.ttf"
+            app:font="Roboto-Bold.ttf"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="26dp"
+            android:textColor="@color/white_main"
+            style="@style/default_text_style_menu_item"/>
+
+        <com.deevs.guessit.views.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pending Invitations"
+            app:font="Roboto-Bold.ttf"
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="26dp"
@@ -41,22 +52,11 @@
         <com.deevs.guessit.views.TypefaceTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pending Invitations"
-            app:font="RobotoCondensed-Regular.ttf"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="28dp"
-            android:textColor="@color/white_main"
-            style="@style/default_text_style"/>
-
-        <com.deevs.guessit.views.TypefaceTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="Friends List"
-            app:font="Roboto-Medium.ttf"
+            app:font="Roboto-Bold.ttf"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textSize="28dp"
+            android:textSize="26dp"
             android:textColor="@color/white_main"
             style="@style/default_text_style"/>
 
@@ -64,10 +64,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="How to Play"
-            app:font="Roboto-Medium.ttf"
+            app:font="Roboto-Bold.ttf"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textSize="28dp"
+            android:textSize="26dp"
             android:textColor="@color/white_main"
             style="@style/default_text_style"/>
 
@@ -76,10 +76,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Logout"
-            app:font="Roboto-Medium.ttf"
+            app:font="Roboto-Bold.ttf"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textSize="28dp"
+            android:textSize="26dp"
             android:textColor="@color/white_main"
             style="@style/default_text_style"/>
     </LinearLayout>

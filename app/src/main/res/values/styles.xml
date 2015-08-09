@@ -19,4 +19,10 @@
         <item name="android:background">@color/indigo_main</item>
         <item name="android:padding">10dp</item>
     </style>
+
+    <style name="default_text_style_menu_item">
+        <item name="android:textColor">@color/white_main</item>
+        <item name="android:background">@color/pink_main</item>
+        <item name="android:padding">6dp</item>
+    </style>
 </resources>
