@@ -10,6 +10,7 @@ import android.view.View;
 import com.deevs.guessit.R;
 import com.deevs.guessit.views.TypefaceTextView;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 
 public class MainActivity extends Activity {
 
@@ -39,6 +40,9 @@ public class MainActivity extends Activity {
     }
 
     private void setupClickListeners() {
+
+        // Create a new game button.
+        // TODO: Should be 'Current Game' if already in a game.
         final TypefaceTextView createGameBtn = (TypefaceTextView) findViewById(R.id.create_game);
         createGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +55,16 @@ public class MainActivity extends Activity {
                     }
                 };
                 new Handler().post(gameLobbyRunnable);
+            }
+        });
+
+        // Logout button
+        final TypefaceTextView logoutBtn = (TypefaceTextView) findViewById(R.id.logout);
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginManager.getInstance().logOut();
+                finish();
             }
         });
     }

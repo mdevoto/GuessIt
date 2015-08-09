@@ -42,8 +42,7 @@
         <!-- Used for Main Menu screen -->
         <activity
             android:name="com.deevs.guessit.activities.MainActivity"
-            android:label="@string/app_name"
-            android:noHistory="true">
+            android:label="@string/app_name">
         </activity>
 
         <!-- Game Lobby screen -->

@@ -7,6 +7,7 @@ import android.util.Log;
 import com.deevs.guessit.networking.RequestManager;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +20,11 @@ public class GameLobby extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         updateFriendsList();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     private void updateFriendsList() {

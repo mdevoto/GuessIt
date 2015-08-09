@@ -36,15 +36,9 @@ public class FacebookLoginActivity extends FragmentActivity {
             public void onSuccess(LoginResult loginResult) {
                 Log.e(TAG, "onSuccess - Facebook Login, access token = " + loginResult.getAccessToken() + " permissions granted = " + loginResult.getRecentlyGrantedPermissions());
 
-                final Runnable startNextActivityDelayed = new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.e(TAG, "Starting Main Menu Activity with Access token");
-                        final Intent startMainMenu = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(startMainMenu);
-                    }
-                };
-                new Handler().post(startNextActivityDelayed);
+                // Login success - Start/show the main menu now.
+                final Intent startMainMenu = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(startMainMenu);
                 finish();
             }
 

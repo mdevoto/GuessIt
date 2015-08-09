@@ -72,6 +72,7 @@
             style="@style/default_text_style"/>
 
         <com.deevs.guessit.views.TypefaceTextView
+            android:id="@+id/logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Logout"
