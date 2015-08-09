@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.deevs.guessit.R;
 import com.deevs.guessit.networking.NetworkManager;
@@ -35,11 +36,8 @@ public class FacebookLoginActivity extends FragmentActivity {
 
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.e(TAG, "onSuccess - Facebook Login, access token = " + loginResult.getAccessToken() + " permissions granted = " + loginResult.getRecentlyGrantedPermissions());
-
-                // Initialize any singleton managers for use within the game once we are logged in..
-                // Especially App42..
-                NetworkManager.INSTANCE.init(getApplicationContext());
+                Log.e(TAG, "onSuccess - Facebook Login, access token user ID = " + loginResult.getAccessToken().getUserId()
+                        + " permissions granted = " + loginResult.getRecentlyGrantedPermissions());
 
                 // Login success - Start/show the main menu now.
                 final Intent startMainMenu = new Intent(getApplicationContext(), MainActivity.class);
@@ -55,6 +53,22 @@ public class FacebookLoginActivity extends FragmentActivity {
             @Override
             public void onError(FacebookException e) {
                 Log.e(TAG, "onError - Facebook Login, exception = " + e.getMessage());
+
+                // Disable the login button for 2 seconds before allowing try again..
+                loginBtn.setEnabled(false);
+                final Runnable reenableLogin = new Runnable() {
+                    @Override
+                    public void run() {
+                        loginBtn.setEnabled(true);
+                    }
+                };
+                new Handler().postDelayed(reenableLogin, 2000);
+
+                // Show an error toast for failed login and do nothing..
+                Toast loginFailedToast = new Toast(getApplicationContext());
+                loginFailedToast.setText("Failed to Login to Facebook at this time. \nCheck your network and try again later.");
+                loginFailedToast.setDuration(Toast.LENGTH_LONG);
+                loginFailedToast.show();
             }
         });
     }

@@ -1,8 +1,11 @@
 package com.deevs.guessit.networking;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
+import com.deevs.guessit.networking.interfaces.NetworkFriendRequestListener;
+import com.deevs.guessit.networking.interfaces.NetworkRequestListener;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.shephertz.app42.paas.sdk.android.App42API;
@@ -14,11 +17,7 @@ import java.util.ArrayList;
 
 public enum NetworkManager {
     INSTANCE;
-    private NetworkManager() {
-        if(!mIsInitialized) {
-            throw new RuntimeException("Must call init() before using NetworkManager!");
-        }
-    }
+    private NetworkManager() {}
 
     private boolean mIsInitialized;
     private SocialService mSocialService;
@@ -47,7 +46,6 @@ public enum NetworkManager {
             // Build the social service after init and connect it to the Facebook credentials..
             mSocialService = App42API.buildSocialService();
             if(AccessToken.getCurrentAccessToken() != null) {
-
                 // Connect the Facebook account with App42 for additional support.
                 mSocialService.linkUserFacebookAccount(
                         AccessToken.getCurrentAccessToken().getUserId(),
@@ -56,7 +54,7 @@ public enum NetworkManager {
                     @Override
                     public void onSuccess(Object response) {
                         final Social social  = (Social)response;
-                        Log.e(TAG, "onSuccess (account linked): result username = " + social.getUserName());
+                        Log.e(TAG, "onSuccess (account linked): result User ID = " + social.getUserName());
                     }
 
                     @Override
@@ -77,12 +75,26 @@ public enum NetworkManager {
      * Returns the list of friends using this application, otherwise null if unavailable at the moment
      * I.e if a session is invalid we may have to login again..
      **/
-    public ArrayList<Social.Friends> getFriendsList() {
+    public void getFriendsList(final NetworkFriendRequestListener listener) {
         checkInitialized();
+        if(listener == null) return;
+
         final AccessToken token = AccessToken.getCurrentAccessToken();
-        if(token != null) {
-            return mSocialService.getFacebookFriendsFromLinkUser(token.getUserId()).getFriendList();
-        }
-        return null;
+        final AsyncTask task = new AsyncTask<Void, Void, ArrayList<Social.Friends>>() {
+
+            @Override
+            protected ArrayList<Social.Friends> doInBackground(Void... voids) {
+                if(token != null) {
+                    return mSocialService.getFacebookFriendsFromLinkUser(token.getUserId()).getFriendList();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<Social.Friends> friends) {
+                super.onPostExecute(friends);
+                listener.onCompleted(friends);
+            }
+        }.execute();
     }
 }
