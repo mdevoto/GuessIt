@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.deevs.guessit.R;
+import com.deevs.guessit.networking.AccountWrapper;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -33,14 +34,12 @@ public class FacebookLoginActivity extends FragmentActivity {
         final CallbackManager callbackManager = CallbackManager.Factory.create();
 
         // Permission to read user's friends who have the application installed.
-        loginBtn.setReadPermissions("user_friends");
+        loginBtn.setReadPermissions(AccountWrapper.PERMISSION_READ_FRIENDS);
         loginBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.e(TAG, "onSuccess - Facebook Login, access token user ID = " + loginResult.getAccessToken().getUserId()
-                        + " permissions granted = " + loginResult.getRecentlyGrantedPermissions());
-
+                Log.e(TAG, "onSuccess - Facebook Login success");
                 // Login success - Start/show the main menu now.
                 final Intent startMainMenu = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(startMainMenu);

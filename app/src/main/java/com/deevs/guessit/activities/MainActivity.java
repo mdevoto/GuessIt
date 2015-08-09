@@ -13,7 +13,6 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 
 public class MainActivity extends Activity {
-
     public static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
@@ -26,7 +25,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
     }
@@ -34,15 +32,15 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-
         // Logs 'app deactivate' App Event.
         AppEventsLogger.deactivateApp(this);
     }
 
     private void setupClickListeners() {
-
         // Create a new game button.
         // TODO: Should be 'Current Game' if already in a game.
+        // TODO: Create GameManager for current game state..Make him singleton
+        // TODO: Setup ScreenManager of sorts, or interface to know which screen we're on..
         final TypefaceTextView createGameBtn = (TypefaceTextView) findViewById(R.id.create_game);
         createGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override

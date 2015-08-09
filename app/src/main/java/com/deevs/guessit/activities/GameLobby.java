@@ -9,17 +9,19 @@ import android.util.Log;
 
 import com.deevs.guessit.R;
 import com.deevs.guessit.adapters.LobbyRecyclerAdapter;
+import com.deevs.guessit.networking.AccountWrapper;
 import com.deevs.guessit.networking.NetworkManager;
 import com.deevs.guessit.networking.interfaces.NetworkFriendRequestListener;
 import com.shephertz.app42.paas.sdk.android.social.Social;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GameLobby extends Activity implements NetworkFriendRequestListener {
 
     public static final String TAG = GameLobby.class.getSimpleName();
 
+    private AccountWrapper mAccount;
+    private NetworkManager mNetworkManager;
     private RecyclerView mLobbyRecyclerView;
     private LobbyRecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutMgr;
@@ -28,6 +30,8 @@ public class GameLobby extends Activity implements NetworkFriendRequestListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_lobby);
+
+        mAccount = new AccountWrapper();
 
         mLobbyRecyclerView = (RecyclerView) findViewById(R.id.cur_lobby_list);
         mLobbyRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -42,8 +46,9 @@ public class GameLobby extends Activity implements NetworkFriendRequestListener 
 
         // Initialize any singleton managers for use within the game once we are logged in..
         // Especially App42..
-        NetworkManager.INSTANCE.init(getApplicationContext());
-        NetworkManager.INSTANCE.getFriendsList(this);
+        mNetworkManager = new NetworkManager();
+        mNetworkManager.init(this, mAccount.getAccessToken());
+        mNetworkManager.getFriendsList(this);
     }
 
     @Override
