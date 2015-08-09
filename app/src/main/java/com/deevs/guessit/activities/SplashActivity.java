@@ -28,7 +28,7 @@ public class SplashActivity extends Activity {
 
         setContentView(R.layout.activity_splash);
 
-        final Runnable startNextActivityDelayed = new Runnable() {
+        final Runnable startNextActivityDelayed = new Runnable() { 
             @Override
             public void run() {
                 if(AccessToken.getCurrentAccessToken() == null) {
