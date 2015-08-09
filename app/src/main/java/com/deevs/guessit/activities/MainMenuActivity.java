@@ -11,8 +11,8 @@ import com.deevs.guessit.networking.AccountWrapper;
 import com.deevs.guessit.views.TypefaceTextView;
 import com.facebook.appevents.AppEventsLogger;
 
-public class MainActivity extends Activity {
-    public static final String TAG = MainActivity.class.getSimpleName();
+public class MainMenuActivity extends Activity {
+    public static final String TAG = MainMenuActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
                 final Runnable gameLobbyRunnable = new Runnable() {
                     @Override
                     public void run() {
-                        final Intent startLobbyIntent = new Intent(getApplicationContext(), GameLobby.class);
+                        final Intent startLobbyIntent = new Intent(getApplicationContext(), GameLobbyActivity.class);
                         startActivity(startLobbyIntent);
                     }
                 };

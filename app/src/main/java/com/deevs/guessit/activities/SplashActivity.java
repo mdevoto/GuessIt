@@ -38,7 +38,7 @@ public class SplashActivity extends Activity {
                     startActivity(startLoginScreen);
                 }
                 else {
-                    final Intent openMainMenu = new Intent(getApplicationContext(), MainActivity.class);
+                    final Intent openMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
                     startActivity(openMainMenu);
                 }
                 mAccount = null;

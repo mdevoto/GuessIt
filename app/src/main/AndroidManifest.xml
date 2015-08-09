@@ -43,14 +43,14 @@
 
         <!-- Used for Main Menu screen -->
         <activity
-            android:name="com.deevs.guessit.activities.MainActivity"
+            android:name=".activities.MainMenuActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
         </activity>
 
         <!-- Game Lobby screen -->
         <activity
-            android:name="com.deevs.guessit.activities.GameLobby"
+            android:name=".activities.GameLobbyActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
         </activity>

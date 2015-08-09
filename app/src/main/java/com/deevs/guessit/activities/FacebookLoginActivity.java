@@ -41,7 +41,7 @@ public class FacebookLoginActivity extends FragmentActivity {
             public void onSuccess(LoginResult loginResult) {
                 Log.e(TAG, "onSuccess - Facebook Login success");
                 // Login success - Start/show the main menu now.
-                final Intent startMainMenu = new Intent(getApplicationContext(), MainActivity.class);
+                final Intent startMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
                 startActivity(startMainMenu);
                 finish();
             }

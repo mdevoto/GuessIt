@@ -16,12 +16,11 @@ import com.shephertz.app42.paas.sdk.android.social.Social;
 
 import java.util.ArrayList;
 
-public class GameLobby extends Activity implements NetworkFriendRequestListener {
+public class GameLobbyActivity extends Activity implements NetworkFriendRequestListener {
 
-    public static final String TAG = GameLobby.class.getSimpleName();
+    public static final String TAG = GameLobbyActivity.class.getSimpleName();
 
     private AccountWrapper mAccount;
-    private NetworkManager mNetworkManager;
     private RecyclerView mLobbyRecyclerView;
     private LobbyRecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutMgr;
@@ -46,9 +45,7 @@ public class GameLobby extends Activity implements NetworkFriendRequestListener 
 
         // Initialize any singleton managers for use within the game once we are logged in..
         // Especially App42..
-        mNetworkManager = new NetworkManager();
-        mNetworkManager.init(this, mAccount.getAccessToken());
-        mNetworkManager.getFriendsList(this);
+        NetworkManager.INSTANCE.getFriendsList(this);
     }
 
     /**
