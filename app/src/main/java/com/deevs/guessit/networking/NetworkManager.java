@@ -5,9 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.deevs.guessit.networking.interfaces.NetworkFriendRequestListener;
-import com.deevs.guessit.networking.interfaces.NetworkRequestListener;
 import com.facebook.AccessToken;
-import com.facebook.login.LoginManager;
 import com.shephertz.app42.paas.sdk.android.App42API;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
 import com.shephertz.app42.paas.sdk.android.social.Social;
