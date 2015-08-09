@@ -19,12 +19,19 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize the SDK before executing any other operations,
+        // especially, if you're using Facebook UI elements.
+        if(!FacebookSdk.isInitialized()) {
+            FacebookSdk.sdkInitialize(getApplicationContext());
+        }
+
         setContentView(R.layout.activity_splash);
 
         final Runnable startNextActivityDelayed = new Runnable() {
             @Override
             public void run() {
-                if(!FacebookSdk.isInitialized() || AccessToken.getCurrentAccessToken() == null) {
+                if(AccessToken.getCurrentAccessToken() == null) {
                     final Intent startLoginScreen = new Intent(getApplicationContext(), FacebookLoginActivity.class);
                     startActivity(startLoginScreen);
                 }
