@@ -51,6 +51,9 @@ public class GameLobby extends Activity implements NetworkFriendRequestListener 
         mNetworkManager.getFriendsList(this);
     }
 
+    /**
+     * Callback currently for the results of getFriendsList in onCreate
+     **/
     @Override
     public void onCompleted(final ArrayList<Social.Friends> friends) {
         Log.e(TAG, "Friends list request completed.");
@@ -59,6 +62,7 @@ public class GameLobby extends Activity implements NetworkFriendRequestListener 
         }
 
         mAdapter.updateFriendData(friends);
+        // TODO: Figure out why the FUCK this isn't working and refreshing the recyclerview
         mAdapter.notifyDataSetChanged();
     }
 }

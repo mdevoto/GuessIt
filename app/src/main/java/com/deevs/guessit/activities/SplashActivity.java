@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import com.deevs.guessit.R;
 import com.deevs.guessit.networking.AccountWrapper;
-import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 
 public class SplashActivity extends Activity {
