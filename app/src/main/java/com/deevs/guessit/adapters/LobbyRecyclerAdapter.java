@@ -19,18 +19,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.deevs.guessit.R;
 import com.deevs.guessit.views.TypefaceTextView;
+import com.shephertz.app42.paas.sdk.android.social.Social;
+
+import java.util.ArrayList;
 
 /**
- * Provide views to RecyclerView with data from mDataSet.
+ * Provide views to RecyclerView with data from mFriendData.
  */
 public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdapter.ViewHolder> {
     private static final String TAG = LobbyRecyclerAdapter.class.getSimpleName();
 
-    private String[] mDataSet;
+    private ArrayList<Social.Friends> mFriendData;
 
     // BEGIN_INCLUDE(recyclerViewSampleViewHolder)
     /**
@@ -55,8 +57,13 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
      *
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public LobbyRecyclerAdapter(String[] dataSet) {
-        mDataSet = dataSet;
+    public LobbyRecyclerAdapter(final ArrayList<Social.Friends> dataSet) {
+        mFriendData = dataSet;
+    }
+
+    public void updateFriendData(ArrayList<Social.Friends> friends) {
+        this.mFriendData.clear();
+        this.mFriendData.addAll(friends);
     }
 
     // BEGIN_INCLUDE(recyclerViewOnCreateViewHolder)
@@ -64,28 +71,23 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
-        View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.lobby_row_item, viewGroup, false);
-
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.lobby_row_item, viewGroup, false);
         return new ViewHolder(v);
     }
-    // END_INCLUDE(recyclerViewOnCreateViewHolder)
 
     // BEGIN_INCLUDE(recyclerViewOnBindViewHolder)
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        Log.d(TAG, "Element " + position + " set.");
-
+        Log.e(TAG, "onBindViewHolder");
         // Get element from your dataset at this position and replace the contents of the view
-        // with that element
-        viewHolder.getUsernameView().setText(mDataSet[position]);
+        // with that element.
+        viewHolder.getUsernameView().setText(mFriendData.get(position).getName());
     }
-    // END_INCLUDE(recyclerViewOnBindViewHolder)
 
-    // Return the size of your dataset (invoked by the layout manager)
+    // Return the size of your data set (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataSet.length;
+        return mFriendData.size();
     }
 }

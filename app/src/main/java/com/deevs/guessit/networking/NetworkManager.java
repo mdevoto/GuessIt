@@ -13,9 +13,8 @@ import com.shephertz.app42.paas.sdk.android.social.SocialService;
 
 import java.util.ArrayList;
 
-public enum NetworkManager {
-    INSTANCE;
-    private NetworkManager() {}
+public class NetworkManager {
+    public NetworkManager() {}
 
     private boolean mIsInitialized;
     private SocialService mSocialService;
@@ -31,24 +30,28 @@ public enum NetworkManager {
     }
 
     /**
-     * Must be called before the NetworkManager can be utilized AT ALL
+     * Must be called before the NetworkManager can be utilized AT ALL. Will setup necessary services
+     * to create and run the game; such as social service integration with Facebook (friends list),
+     * TODO: Fill in other services
      *
      * @param context: A valid application context
      * @param
      **/
-    public void init(final Context context) {
-        if(context != null) {
+    public void init(final Context context, final AccessToken facebookAccessToken) {
+        if(context != null && facebookAccessToken != null) {
             App42API.initialize(context.getApplicationContext(), sApiKey, sSecret);
             mIsInitialized = true;
 
             // Build the social service after init and connect it to the Facebook credentials..
             mSocialService = App42API.buildSocialService();
             if(AccessToken.getCurrentAccessToken() != null) {
-                // Connect the Facebook account with App42 for additional support.
+
+                // Connect the Facebook account with App42 for additional support functionality
+                // and wrapping of trivial tasks like getting friends' list..
                 mSocialService.linkUserFacebookAccount(
                         AccessToken.getCurrentAccessToken().getUserId(),
-                        AccessToken.getCurrentAccessToken().getToken(),
-                        new App42CallBack() {
+                        AccessToken.getCurrentAccessToken().getToken(), new App42CallBack() {
+
                     @Override
                     public void onSuccess(Object response) {
                         final Social social  = (Social)response;
@@ -64,7 +67,6 @@ public enum NetworkManager {
             else {
                 // TODO: Handle logout/session invalid here..
                 // TODO: Try to login again?
-                AccessToken.refreshCurrentAccessTokenAsync();
             }
         }
     }
@@ -72,6 +74,8 @@ public enum NetworkManager {
     /**
      * Returns the list of friends using this application, otherwise null if unavailable at the moment
      * I.e if a session is invalid we may have to login again..
+     *
+     * @param listener The listener callback to call when the friend request is completed
      **/
     public void getFriendsList(final NetworkFriendRequestListener listener) {
         checkInitialized();
