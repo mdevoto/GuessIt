@@ -32,7 +32,7 @@ public class NetworkManager {
     /**
      * Must be called before the NetworkManager can be utilized AT ALL. Will setup necessary services
      * to create and run the game; such as social service integration with Facebook (friends list),
-     * TODO: Fill in other services
+     * TODO: Fill in other services such as timers, game events, messaging, etc..
      *
      * @param context: A valid application context
      * @param

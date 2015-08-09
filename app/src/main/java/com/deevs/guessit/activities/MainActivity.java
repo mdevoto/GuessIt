@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.deevs.guessit.R;
+import com.deevs.guessit.networking.AccountWrapper;
 import com.deevs.guessit.views.TypefaceTextView;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
@@ -61,7 +62,7 @@ public class MainActivity extends Activity {
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginManager.getInstance().logOut();
+                new AccountWrapper().logout();
                 finish();
             }
         });
