@@ -15,13 +15,16 @@ public class SplashActivity extends Activity {
 
     private static final int SPLASH_DURATION_MS = 2000;
 
+    private Handler mHandler;
     private AccountWrapper mAccount;
+    private Runnable mStartNextActivityDelayed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        mHandler = new Handler();
         mAccount = new AccountWrapper();
 
         // Initialize the SDK before executing any other operations,
@@ -30,7 +33,7 @@ public class SplashActivity extends Activity {
             FacebookSdk.sdkInitialize(getApplicationContext());
         }
 
-        final Runnable startNextActivityDelayed = new Runnable() {
+        mStartNextActivityDelayed = new Runnable() {
             @Override
             public void run() {
                 if(!mAccount.isLoggedIn()) {
@@ -45,16 +48,25 @@ public class SplashActivity extends Activity {
                 finish();
             }
         };
-        new Handler().postDelayed(startNextActivityDelayed, SPLASH_DURATION_MS);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        initiateStartNextActivity();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        cancelStartNextActivity();
+    }
+
+    private void initiateStartNextActivity() {
+        mHandler.postDelayed(mStartNextActivityDelayed, SPLASH_DURATION_MS);
+    }
+
+    private void cancelStartNextActivity() {
+        mHandler.removeCallbacks(mStartNextActivityDelayed);
     }
 }
