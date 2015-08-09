@@ -13,6 +13,6 @@ public enum RequestManager {
     private RequestManager() {}
 
     public void requestFriendsList(final GraphRequest.GraphJSONArrayCallback callback) {
-        GraphRequest.newMyFriendsRequest(AccessToken.getCurrentAccessToken(), callback);
+        GraphRequest.newMyFriendsRequest(AccessToken.getCurrentAccessToken(), callback).executeAsync();
     }
 }

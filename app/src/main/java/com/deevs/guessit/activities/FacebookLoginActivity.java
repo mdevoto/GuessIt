@@ -23,10 +23,8 @@ public class FacebookLoginActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_facebook_login);
 
-        Log.e(TAG, "onCreate: Starting Facebook login");
         final LoginButton loginBtn = (LoginButton) findViewById(R.id.login_button);
         mCallbackMgr = CallbackManager.Factory.create();
 

@@ -29,7 +29,7 @@ public class GameLobby extends Activity {
                         System.out.println("jsonArray: " + jsonArray);
                         System.out.println("GraphResponse: " + response);
                         try {
-                            Log.e(TAG, "Printing friends list: ");
+                            Log.e(TAG, "Printing friends list of size: " + jsonArray.length());
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 Log.e(TAG, "Friend i: " + i + " = " + jsonArray.get(i).toString());
                             }
