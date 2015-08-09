@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.deevs.guessit.R;
+import com.deevs.guessit.networking.NetworkManager;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -35,6 +36,10 @@ public class FacebookLoginActivity extends FragmentActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.e(TAG, "onSuccess - Facebook Login, access token = " + loginResult.getAccessToken() + " permissions granted = " + loginResult.getRecentlyGrantedPermissions());
+
+                // Initialize any singleton managers for use within the game once we are logged in..
+                // Especially App42..
+                NetworkManager.INSTANCE.init(getApplicationContext());
 
                 // Login success - Start/show the main menu now.
                 final Intent startMainMenu = new Intent(getApplicationContext(), MainActivity.class);

@@ -2,47 +2,27 @@ package com.deevs.guessit.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.deevs.guessit.networking.RequestManager;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
-
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.deevs.guessit.R;
+import com.deevs.guessit.networking.NetworkManager;
 
 public class GameLobby extends Activity {
 
     public static final String TAG = GameLobby.class.getSimpleName();
 
+    private RecyclerView mLobbyRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        updateFriendsList();
+        setContentView(R.layout.activity_game_lobby);
+        Log.e(TAG, "Friends list = " + NetworkManager.INSTANCE.getFriendsList());
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    private void updateFriendsList() {
-        RequestManager.INSTANCE.requestFriendsList(
-                new GraphRequest.GraphJSONArrayCallback() {
-                    @Override
-                    public void onCompleted(JSONArray jsonArray, GraphResponse response) {
-                        System.out.println("jsonArray: " + jsonArray);
-                        System.out.println("GraphResponse: " + response);
-                        try {
-                            Log.e(TAG, "Printing friends list of size: " + jsonArray.length());
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                Log.e(TAG, "Friend i: " + i + " = " + jsonArray.get(i).toString());
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
     }
 }

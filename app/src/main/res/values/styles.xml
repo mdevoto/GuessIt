@@ -13,4 +13,10 @@
         <item name="android:background">@color/pink_main</item>
         <item name="android:padding">10dp</item>
     </style>
+
+    <style name="text_style_blue_pink">
+        <item name="android:textColor">@color/pink_main</item>
+        <item name="android:background">@color/indigo_main</item>
+        <item name="android:padding">10dp</item>
+    </style>
 </resources>

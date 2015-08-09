@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
-    <!-- Necessary for sharing of videos to Facebook -->
+    <!-- TODO: Necessary for sharing of videos to Facebook -->
     <provider android:authorities="com.facebook.app.FacebookContentProvider1137966712884548"
         android:name="com.facebook.FacebookContentProvider"
         android:exported="true" />
@@ -30,25 +30,29 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
         </activity>
 
         <!-- Used for Facebook login screen -->
         <activity
             android:name="com.deevs.guessit.activities.FacebookLoginActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
         </activity>
 
         <!-- Used for Main Menu screen -->
         <activity
             android:name="com.deevs.guessit.activities.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
         </activity>
 
         <!-- Game Lobby screen -->
         <activity
             android:name="com.deevs.guessit.activities.GameLobby"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
         </activity>
 
         <!-- Required for use with Facebook SDK -->

@@ -26,5 +26,7 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
     compile 'com.facebook.android:facebook-android-sdk:4.1.0'
+    compile files('libs/App42_ANDROID_SDK_3.4.jar')
 }
