@@ -64,6 +64,7 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
     public void updateFriendData(ArrayList<Social.Friends> friends) {
         this.mFriendData.clear();
         this.mFriendData.addAll(friends);
+        notifyDataSetChanged();
     }
 
     // BEGIN_INCLUDE(recyclerViewOnCreateViewHolder)

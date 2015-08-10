@@ -98,9 +98,10 @@ public class LoginAndNetworkSetupActivity extends Activity {
 
     private void showFailureToConnectUi() {
         // Show an error toast for failed login and do nothing..
-        Toast loginFailedToast = new Toast(getApplicationContext());
-        loginFailedToast.setText("Failed to login to the game network. \nCheck your network and try again later.");
-        loginFailedToast.setDuration(Toast.LENGTH_SHORT);
+        Toast loginFailedToast = Toast.makeText(
+                getApplicationContext(),
+                "Failed to login to the game network. \nCheck your network and try again later.",
+                Toast.LENGTH_LONG);
         loginFailedToast.show();
     }
 }
