@@ -1,6 +1,8 @@
 package com.deevs.guessit.networking;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -69,6 +71,12 @@ public enum NetworkManager {
             // TODO: Make a login attept using the account, in the listener for that, try and linkUserFacebookAccount again
             // TODO: Then callback the initListener
         }
+    }
+
+    public boolean isNetworkAvailable(final Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     public boolean isInitialized() {

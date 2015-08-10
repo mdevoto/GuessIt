@@ -3,6 +3,7 @@
     package="com.deevs.guessit" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!-- TODO: Necessary for sharing of videos to Facebook -->
     <provider android:authorities="com.facebook.app.FacebookContentProvider1137966712884548"

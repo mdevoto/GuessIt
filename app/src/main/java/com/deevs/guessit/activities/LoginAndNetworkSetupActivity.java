@@ -9,8 +9,6 @@ import android.widget.Toast;
 
 import com.deevs.guessit.R;
 import com.deevs.guessit.networking.AccountWrapper;
-import com.deevs.guessit.networking.NetworkManager;
-import com.deevs.guessit.networking.interfaces.NetworkManagerInitListener;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -20,8 +18,6 @@ import com.facebook.login.widget.LoginButton;
 public class LoginAndNetworkSetupActivity extends Activity {
 
     public static final String TAG = LoginAndNetworkSetupActivity.class.getSimpleName();
-
-    private boolean mLoginInProgress;
     private LoginButton mLoginBtn;
     private CallbackManager mLoginCallbackMgr;
 
