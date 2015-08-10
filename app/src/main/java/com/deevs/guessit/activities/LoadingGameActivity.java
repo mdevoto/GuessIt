@@ -16,6 +16,7 @@ public class LoadingGameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_game);
 
+        // Initialize our NetworkManager wrapper to create/manage game sessions
         NetworkManager.INSTANCE.init(this, new NetworkManagerInitListener() {
             @Override
             public void initSuccess() {

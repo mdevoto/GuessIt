@@ -1,26 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.deevs.guessit.views.TypefaceTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/text_style_blue_pink"
-        android:gravity="center"
-        android:textSize="40dp"
-        android:text="Current Lobby"
-        app:font="RobotoCondensed-Regular.ttf"/>
-
     <!-- Parent container for current lobby -->
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/pink_main"
-        android:id="@+id/cur_lobby_list">
+        android:layout_height="match_parent"
+        android:background="@color/indigo_main"
+        android:id="@+id/lobby_list">
     </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

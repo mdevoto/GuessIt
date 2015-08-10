@@ -17,12 +17,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Guess It"
-            style="@style/default_text_style_menu_item"
+            style="@style/text_default"
             app:font="Roboto-Black.ttf"
             android:layout_gravity="top"
             android:gravity="center"
             android:layout_marginBottom="16dp"
-            android:textSize="50dp"
+            android:textSize="52dp"
             android:clickable="false"/>
 
         <com.deevs.guessit.views.TypefaceTextView
@@ -34,7 +34,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="26dp"
-            style="@style/default_text_style_menu_item"/>
+            style="@style/text_menu_item"/>
 
         <com.deevs.guessit.views.TypefaceTextView
             android:layout_width="match_parent"
@@ -45,7 +45,7 @@
             android:gravity="center"
             android:textSize="26dp"
             android:textColor="@color/white_main"
-            style="@style/default_text_style"/>
+            style="@style/text_default"/>
 
         <com.deevs.guessit.views.TypefaceTextView
             android:layout_width="match_parent"
@@ -56,7 +56,7 @@
             android:gravity="center"
             android:textSize="26dp"
             android:textColor="@color/white_main"
-            style="@style/default_text_style"/>
+            style="@style/text_default"/>
 
         <com.deevs.guessit.views.TypefaceTextView
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
             android:gravity="center"
             android:textSize="26dp"
             android:textColor="@color/white_main"
-            style="@style/default_text_style"/>
+            style="@style/text_default"/>
 
         <com.deevs.guessit.views.TypefaceTextView
             android:id="@+id/logout"
@@ -79,6 +79,6 @@
             android:gravity="center"
             android:textSize="26dp"
             android:textColor="@color/white_main"
-            style="@style/default_text_style"/>
+            style="@style/text_default"/>
     </LinearLayout>
 </RelativeLayout>

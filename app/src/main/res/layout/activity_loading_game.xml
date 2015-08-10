@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         app:font="Roboto-Black.ttf"
         android:text="Doing stuff..."
-        android:textSize="40dp"
+        android:textSize="32dp"
         android:gravity="center"
-        style="@style/text_style_blue_pink"/>
+        style="@style/text_loading"/>
 
 </LinearLayout>

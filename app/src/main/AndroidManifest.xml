@@ -41,9 +41,16 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <!-- Used for Main Menu screen -->
+        <!-- Main Menu screen -->
         <activity
             android:name=".activities.MainMenuActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <!-- Game Loading screen (after Create clicked) -->
+        <activity
+            android:name=".activities.LoadingGameActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
         </activity>

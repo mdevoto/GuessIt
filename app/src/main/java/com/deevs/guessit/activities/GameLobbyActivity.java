@@ -32,7 +32,7 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
 
         mAccount = new AccountWrapper();
 
-        mLobbyRecyclerView = (RecyclerView) findViewById(R.id.cur_lobby_list);
+        mLobbyRecyclerView = (RecyclerView) findViewById(R.id.lobby_list);
         mLobbyRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mAdapter = new LobbyRecyclerAdapter(new ArrayList<Social.Friends>());
