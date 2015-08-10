@@ -3,9 +3,8 @@ package com.deevs.guessit.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.deevs.guessit.R;
@@ -18,16 +17,18 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-public class FacebookLoginActivity extends Activity {
+public class LoginAndNetworkSetupActivity extends Activity {
 
-    public static final String TAG = FacebookLoginActivity.class.getSimpleName();
+    public static final String TAG = LoginAndNetworkSetupActivity.class.getSimpleName();
 
+    private boolean mLoginInProgress;
     private LoginButton mLoginBtn;
     private CallbackManager mLoginCallbackMgr;
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        mLoginBtn.registerCallback(null, null);
         finish();
     }
 
@@ -46,38 +47,33 @@ public class FacebookLoginActivity extends Activity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.e(TAG, "onSuccess - Facebook Login success");
-
-                // Init the NetworkManager for future use now that we're logged in.
-                NetworkManager.INSTANCE.init(getApplicationContext(), new NetworkManagerInitListener() {
-                    @Override
-                    public void initSuccess() {
-                        // Login success - Start the main menu now.
-                        final Intent startMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
-                        startActivity(startMainMenu);
-                        finish();
-                    }
-
-                    @Override
-                    public void initFailure() {
-                        final AccountWrapper account = new AccountWrapper();
-                        if(account.isLoggedIn()) {
-                            account.logout();
-                        }
-                        showFailureToConnectUi();
-                    }
-                });
+                mLoginBtn.setVisibility(View.INVISIBLE);
+                // Login success - Start the main menu now.
+                final Intent startMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
+                startActivity(startMainMenu);
+                finish();
             }
 
             @Override
             public void onCancel() {
                 Log.e(TAG, "onCancel - Facebook Login");
+                enableLoginButton();
                 showFailureToConnectUi();
             }
 
             @Override
             public void onError(FacebookException e) {
                 Log.e(TAG, "onError - Facebook Login, exception = " + e.getMessage());
+                enableLoginButton();
                 showFailureToConnectUi();
+            }
+        });
+
+        mLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLoginBtn.setText("Login in progress...");
+                disableLoginButton();
             }
         });
     }
@@ -88,10 +84,22 @@ public class FacebookLoginActivity extends Activity {
         mLoginCallbackMgr.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void enableLoginButton() {
+        if(mLoginBtn != null) {
+            mLoginBtn.setEnabled(true);
+        }
+    }
+
+    private void disableLoginButton() {
+        if(mLoginBtn != null) {
+            mLoginBtn.setEnabled(false);
+        }
+    }
+
     private void showFailureToConnectUi() {
         // Show an error toast for failed login and do nothing..
         Toast loginFailedToast = new Toast(getApplicationContext());
-        loginFailedToast.setText("Failed to setup game network. \nCheck your network and try again later.");
+        loginFailedToast.setText("Failed to login to the game network. \nCheck your network and try again later.");
         loginFailedToast.setDuration(Toast.LENGTH_SHORT);
         loginFailedToast.show();
     }

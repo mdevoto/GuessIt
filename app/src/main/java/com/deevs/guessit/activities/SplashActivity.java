@@ -7,6 +7,7 @@ import android.os.Handler;
 
 import com.deevs.guessit.R;
 import com.deevs.guessit.networking.AccountWrapper;
+import com.deevs.guessit.networking.NetworkManager;
 import com.facebook.FacebookSdk;
 
 public class SplashActivity extends Activity {
@@ -37,7 +38,7 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 if(!mAccount.isLoggedIn()) {
-                    final Intent startLoginScreen = new Intent(getApplicationContext(), FacebookLoginActivity.class);
+                    final Intent startLoginScreen = new Intent(getApplicationContext(), LoginAndNetworkSetupActivity.class);
                     startActivity(startLoginScreen);
                 }
                 else {

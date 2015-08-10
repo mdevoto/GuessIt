@@ -55,17 +55,24 @@ public enum NetworkManager {
                     final Social social  = (Social)response;
                     Log.e(TAG, "onSuccess (account linked): result User ID = " + social.getUserName());
                     mIsInitialized = true;
+                    initListener.initSuccess();
                 }
 
                 @Override
                 public void onException(Exception e) {
                     Log.e(TAG, "onException: exception = " + e.getMessage());
+                    initListener.initFailure();
                 }
             });
         }
         else {
-
+            // TODO: Make a login attept using the account, in the listener for that, try and linkUserFacebookAccount again
+            // TODO: Then callback the initListener
         }
+    }
+
+    public boolean isInitialized() {
+        return mIsInitialized;
     }
 
     /**

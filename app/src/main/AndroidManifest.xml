@@ -36,7 +36,7 @@
 
         <!-- Used for Facebook login screen -->
         <activity
-            android:name="com.deevs.guessit.activities.FacebookLoginActivity"
+            android:name=".activities.LoginAndNetworkSetupActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
         </activity>
