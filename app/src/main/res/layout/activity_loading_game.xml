@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:font="Roboto-Black.ttf"
-        android:text="Loading..."
-        android:textSize="26dp"
+        android:text="Doing stuff..."
+        android:textSize="40dp"
         android:gravity="center"
         style="@style/text_style_blue_pink"/>
 

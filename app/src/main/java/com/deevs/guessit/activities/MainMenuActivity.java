@@ -47,8 +47,8 @@ public class MainMenuActivity extends Activity {
                 final Runnable gameLobbyRunnable = new Runnable() {
                     @Override
                     public void run() {
-                        final Intent startLobbyIntent = new Intent(getApplicationContext(), GameLobbyActivity.class);
-                        startActivity(startLobbyIntent);
+                        final Intent startLoadingIntent = new Intent(getApplicationContext(), LoadingGameActivity.class);
+                        startActivity(startLoadingIntent);
                     }
                 };
                 new Handler().post(gameLobbyRunnable);
