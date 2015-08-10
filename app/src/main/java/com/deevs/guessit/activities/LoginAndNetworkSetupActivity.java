@@ -57,14 +57,14 @@ public class LoginAndNetworkSetupActivity extends Activity {
             @Override
             public void onCancel() {
                 Log.e(TAG, "onCancel - Facebook Login");
-                enableLoginButton();
+                enableLoginButton(getResources().getString(R.string.facebook_login_text));
                 showFailureToConnectUi();
             }
 
             @Override
             public void onError(FacebookException e) {
                 Log.e(TAG, "onError - Facebook Login, exception = " + e.getMessage());
-                enableLoginButton();
+                enableLoginButton(getResources().getString(R.string.facebook_login_text));
                 showFailureToConnectUi();
             }
         });
@@ -72,8 +72,7 @@ public class LoginAndNetworkSetupActivity extends Activity {
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mLoginBtn.setText("Login in progress...");
-                disableLoginButton();
+                disableLoginButton(getResources().getString(R.string.facebook_login_in_progress_text));
             }
         });
     }
@@ -84,22 +83,27 @@ public class LoginAndNetworkSetupActivity extends Activity {
         mLoginCallbackMgr.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void enableLoginButton() {
+    private void enableLoginButton(final String setText) {
         if(mLoginBtn != null) {
             mLoginBtn.setEnabled(true);
+            if(setText != null && !setText.isEmpty()) {
+                mLoginBtn.setText(setText);
+            }
         }
     }
 
-    private void disableLoginButton() {
+    private void disableLoginButton(final String setText) {
         if(mLoginBtn != null) {
             mLoginBtn.setEnabled(false);
+            if(setText != null && !setText.isEmpty()) {
+                mLoginBtn.setText(setText);
+            }
         }
     }
 
     private void showFailureToConnectUi() {
         // Show an error toast for failed login and do nothing..
-        Toast loginFailedToast = Toast.makeText(
-                getApplicationContext(),
+        Toast loginFailedToast = Toast.makeText(getApplicationContext(),
                 "Failed to login to the game network. \nCheck your network and try again later.",
                 Toast.LENGTH_LONG);
         loginFailedToast.show();

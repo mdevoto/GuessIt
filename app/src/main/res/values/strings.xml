@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">GuessIt</string>
+
+    <!-- Facebook related strings -->
     <string name="facebook_app_id">1137966712884548</string>
+    <string name="facebook_login_text">Log in with Facebook</string>
+    <string name="facebook_login_in_progress_text">In progress..</string>
 </resources>
