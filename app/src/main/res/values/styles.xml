@@ -30,8 +30,9 @@
         <item name="android:paddingBottom">6dp</item>
         <item name="android:paddingTop">6dp</item>
         <item name="android:paddingStart">30dp</item>
+        <item name="android:paddingEnd">20dp</item>
         <item name="android:maxLines">1</item>
-        <item name="android:gravity">center</item>
+        <item name="android:gravity">right</item>
     </style>
 
     <!-- Loading Text -->

@@ -27,5 +27,6 @@
         app:font="Roboto-Black.ttf"
         android:textSize="26dp"
         android:text="+"
-        android:layout_weight=".5"/>
+        android:layout_weight=".5"
+        android:layout_marginEnd="14dp"/>
 </LinearLayout>
