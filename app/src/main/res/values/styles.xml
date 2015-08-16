@@ -9,28 +9,28 @@
     </style>
 
     <style name="text_default">
-        <item name="android:textColor">@color/white_main</item>
-        <item name="android:background">@color/pink_main</item>
+        <item name="android:textColor">@color/text_main</item>
+        <item name="android:background">@color/text_background_main</item>
         <item name="android:padding">10dp</item>
     </style>
 
     <!-- Menu items in the main menu screen -->
     <style name="text_menu_item">
-        <item name="android:textColor">@color/white_main</item>
-        <item name="android:background">@color/pink_main</item>
+        <item name="android:textColor">@color/text_main</item>
+        <item name="android:background">@color/text_background_main</item>
         <item name="android:padding">6dp</item>
     </style>
 
     <!-- Style for lobby items inside game lobby recycler view -->
     <style name="text_lobby_item">
-        <item name="android:textColor">@color/white_main</item>
+        <item name="android:textColor">@color/text_main</item>
         <item name="android:padding">6dp</item>
     </style>
 
     <!-- Loading Text -->
     <style name="text_loading">
-        <item name="android:textColor">@color/pink_main</item>
-        <item name="android:background">@color/indigo_main</item>
+        <item name="android:textColor">@color/text_background_main</item>
+        <item name="android:background">@color/background_main</item>
         <item name="android:padding">6dp</item>
     </style>
 

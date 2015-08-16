@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/activity_padding"
-    android:background="@color/indigo_main">
+    android:background="@color/background_main">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="26dp"
-            android:textColor="@color/white_main"
+            android:textColor="@color/text_main"
             style="@style/text_default"/>
 
         <com.deevs.guessit.views.TypefaceTextView
@@ -55,7 +55,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="26dp"
-            android:textColor="@color/white_main"
+            android:textColor="@color/text_main"
             style="@style/text_default"/>
 
         <com.deevs.guessit.views.TypefaceTextView
@@ -66,7 +66,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="26dp"
-            android:textColor="@color/white_main"
+            android:textColor="@color/text_main"
             style="@style/text_default"/>
 
         <com.deevs.guessit.views.TypefaceTextView
@@ -78,7 +78,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="26dp"
-            android:textColor="@color/white_main"
+            android:textColor="@color/text_main"
             style="@style/text_default"/>
     </LinearLayout>
 </RelativeLayout>

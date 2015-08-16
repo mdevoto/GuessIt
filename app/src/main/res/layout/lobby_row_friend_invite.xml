@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/background_main"
+    android:weightSum="1">
+
+    <com.deevs.guessit.views.TypefaceTextView
+        android:id="@+id/friend_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="start"
+        android:textColor="@color/text_main"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp"
+        android:paddingStart="14dp"
+        app:font="Roboto-Medium.ttf"
+        android:textSize="26dp"
+        android:text="GuessIt Tester"
+        android:layout_weight=".5"/>
+
+    <com.deevs.guessit.views.TypefaceTextView
+        android:id="@+id/invite_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@color/background_main"
+        android:textColor="@color/text_background_main"
+        android:padding="6dp"
+        app:font="Roboto-Black.ttf"
+        android:textSize="26dp"
+        android:text="+"
+        android:layout_weight=".5"/>
+</LinearLayout>

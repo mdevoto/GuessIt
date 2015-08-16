@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/background_main">
 
     <com.deevs.guessit.views.TypefaceTextView
-        android:id="@+id/username"
+        android:id="@+id/friend_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         style="@style/text_lobby_item"
-        app:font="RobotoCondensed-Black.ttf"
-        android:textSize="30dp"
+        app:font="Roboto-Black.ttf"
+        android:textSize="26dp"
         android:text="GuessIt Tester"/>
-</LinearLayout>
+</FrameLayout>

@@ -1,56 +1,70 @@
 package com.deevs.guessit.adapters;
-/*
-* Copyright (C) 2014 The Android Open Source Project
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.deevs.guessit.R;
 import com.deevs.guessit.views.TypefaceTextView;
 import com.shephertz.app42.paas.sdk.android.social.Social;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
- * Provide views to RecyclerView with data from mFriendData.
+ * Provide views to RecyclerView with data from mFriendList.
  */
 public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdapter.ViewHolder> {
     private static final String TAG = LobbyRecyclerAdapter.class.getSimpleName();
 
-    private ArrayList<Social.Friends> mFriendData;
+    private static final int VIEWTYPE_HEADER                = 0;
+    private static final int VIEWTYPE_EMPTY_FRIENDS_LIST    = 1;
+    private static final int VIEWTYPE_ITEM_FRIEND_INVITE    = 2;
+    private static final int VIEWTYPE_ITEM_FRIEND_LOBBY     = 3;
 
-    // BEGIN_INCLUDE(recyclerViewSampleViewHolder)
+    private ArrayList<Social.Friends> mFriendList;
+    private ArrayList<Social.Friends> mLobbyList;
+
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TypefaceTextView mUsernameView;
+        private TypefaceTextView mText    = null;
+        private TypefaceTextView mInviteButton = null;
 
         public ViewHolder(View v) {
             super(v);
-            mUsernameView = (TypefaceTextView) v.findViewById(R.id.username);
+            switch((Integer) v.getTag()) {
+                case VIEWTYPE_HEADER:
+                    mText = (TypefaceTextView) v.findViewById(R.id.header_text);
+                    break;
+                case VIEWTYPE_ITEM_FRIEND_INVITE:
+                    mText = (TypefaceTextView) v.findViewById(R.id.friend_name);
+                    mInviteButton = (TypefaceTextView) v.findViewById(R.id.invite_button);
+                    mInviteButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // todo: add invite logic here and remove from list.
+                            Log.e(TAG, "onClick the invite button.");
+                        }
+                    });
+                    break;
+                case VIEWTYPE_ITEM_FRIEND_LOBBY:
+                    mText = (TypefaceTextView) v.findViewById(R.id.friend_name);
+                    break;
+                case VIEWTYPE_EMPTY_FRIENDS_LIST:
+                    mText = (TypefaceTextView) v.findViewById(R.id.empty_msg);
+                    break;
+            }
         }
 
-        public TypefaceTextView getUsernameView() {
-            return mUsernameView;
+        public TypefaceTextView getText() {
+            return mText;
         }
     }
-    // END_INCLUDE(recyclerViewSampleViewHolder)
 
     /**
      * Initialize the dataset of the Adapter.
@@ -58,37 +72,78 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
     public LobbyRecyclerAdapter(final ArrayList<Social.Friends> dataSet) {
-        mFriendData = dataSet;
+        mFriendList = dataSet;
     }
 
-    public void updateFriendData(ArrayList<Social.Friends> friends) {
-        this.mFriendData.clear();
-        this.mFriendData.addAll(friends);
+    public void refreshFriendData(ArrayList<Social.Friends> friends) {
+        this.mFriendList.clear();
+        this.mFriendList.addAll(friends);
         notifyDataSetChanged();
     }
 
-    // BEGIN_INCLUDE(recyclerViewOnCreateViewHolder)
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        // Create a new view.
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.lobby_row_item, viewGroup, false);
+        // Create a new ViewHolder depending on type
+        int layoutId = -1;
+        switch(viewType) {
+            case VIEWTYPE_HEADER:
+                layoutId = R.layout.lobby_row_header;
+                break;
+            case VIEWTYPE_ITEM_FRIEND_INVITE:
+                layoutId = R.layout.lobby_row_friend_invite;
+                break;
+            case VIEWTYPE_ITEM_FRIEND_LOBBY:
+                layoutId = R.layout.lobby_row_friend;
+                break;
+            case VIEWTYPE_EMPTY_FRIENDS_LIST:
+                layoutId = R.layout.lobby_row_friend_empty;
+                break;
+        }
+
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(layoutId, viewGroup, false);
+        v.setTag(viewType);
         return new ViewHolder(v);
     }
 
-    // BEGIN_INCLUDE(recyclerViewOnBindViewHolder)
+    @Override
+    public int getItemViewType(int position) {
+        if(position == 0 || position == mLobbyList.size() + 1) {
+            return VIEWTYPE_HEADER;
+        } else if(position <= mLobbyList.size()) {
+            return VIEWTYPE_ITEM_FRIEND_LOBBY;
+        } else if(mFriendList.isEmpty()) {
+            return VIEWTYPE_EMPTY_FRIENDS_LIST;
+        } else {
+            return VIEWTYPE_ITEM_FRIEND_INVITE;
+        }
+    }
+
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        Log.e(TAG, "onBindViewHolder");
-        // Get element from your dataset at this position and replace the contents of the view
+        // Get element from your data set at this position and replace the contents of the view
         // with that element.
-        viewHolder.getUsernameView().setText(mFriendData.get(position).getName());
+        if(position == 0 || position == mLobbyList.size() + 1) {
+            viewHolder.getText().setText("Header: pos = " + position);
+        } else if(position <= mLobbyList.size()) {
+            viewHolder.getText().setText("Friend/Lobby");
+        } else if(mFriendList.isEmpty()) {
+            viewHolder.getText().setText("EMPTY FRIENDS VIEW.");
+        } else {
+            viewHolder.getText().setText("Friend/Invite");
+        }
     }
 
     // Return the size of your data set (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mFriendData.size();
+        // 2 Headers are always visible..
+        final int TWO_HEADER_COUNT = 2;
+        final int ONE_EMPTY_VIEW_COUNT = 2;
+        return (mFriendList.isEmpty() ?
+                (TWO_HEADER_COUNT + ONE_EMPTY_VIEW_COUNT + mLobbyList.size())
+                : (TWO_HEADER_COUNT + mFriendList.size() + mLobbyList.size())
+        );
     }
 }

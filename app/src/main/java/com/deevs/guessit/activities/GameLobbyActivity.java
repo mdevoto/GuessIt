@@ -58,8 +58,7 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
             Log.e(TAG, "friend name = " + friend.getName());
         }
 
-        mAdapter.updateFriendData(friends);
-        /*// TODO: Figure out why the FUCK this isn't working and refreshing the recyclerview
-        mAdapter.notifyDataSetChanged();*/
+        // refresh the recycler view
+        mAdapter.refreshFriendData(friends);
     }
 }

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white_main"
+    android:background="@color/text_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -16,5 +16,4 @@
         android:textSize="32dp"
         android:gravity="center"
         style="@style/text_loading"/>
-
 </LinearLayout>
