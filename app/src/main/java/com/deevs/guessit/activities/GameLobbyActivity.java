@@ -26,6 +26,7 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e(TAG, "onCreate..");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_lobby);
 
@@ -37,6 +38,7 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
         lobbyList.add(NetworkManager.INSTANCE.getUsername());
 
         mAdapter = new LobbyRecyclerAdapter(this, new ArrayList<Social.Friends>(), lobbyList);
+        mAdapter.setIsLoadingFriends(true);
         mLobbyRecyclerView.setAdapter(mAdapter);
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
@@ -55,6 +57,7 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
     @Override
     public void onCompleted(final ArrayList<Social.Friends> friends) {
         Log.e(TAG, "Friends list request completed.");
+        mAdapter.setIsLoadingFriends(false);
         for(Social.Friends friend : friends) {
             Log.e(TAG, "friend name = " + friend.getName());
         }

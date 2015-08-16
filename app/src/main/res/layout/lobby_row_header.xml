@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/text_background_main">
+    android:background="@color/mainBackground">
 
     <com.deevs.guessit.views.TypefaceTextView
         android:id="@+id/header_text"
@@ -12,6 +12,8 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="6dp"
-        app:font="RobotoCondensed-Bold.ttf"
-        android:textSize="30dp"/>
+        app:font="Roboto-Black.ttf"
+        android:textColor="@color/mainTextBackground"
+        android:textSize="50dp"
+        android:text="Lobby"/>
 </FrameLayout>

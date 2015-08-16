@@ -26,6 +26,7 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
     private static final int HEADER_COUNT = 2;
 
     private Context mContext;
+    private boolean mLoadingFriends;
     private ArrayList<Social.Friends> mFriendList;
     private ArrayList<String> mLobbyList;
 
@@ -77,6 +78,10 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
         mContext = context.getApplicationContext();
         mFriendList = friendDataSet;
         mLobbyList = lobbyData;
+    }
+
+    public void setIsLoadingFriends(boolean loading) {
+        mLoadingFriends = loading;
     }
 
     public void refreshFriendData(ArrayList<Social.Friends> friends) {
@@ -139,7 +144,8 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
         } else if(position <= mLobbyList.size()) {
             viewHolder.getText().setText(mLobbyList.get(position-1));
         } else if(mFriendList.isEmpty()) {
-            // Do nothing the text is set on this in the XML.
+            // Either we're empty on friends, or we are currently loading them..show text
+            viewHolder.getText().setText(mContext.getString(mLoadingFriends ? R.string.item_loading_friends : R.string.item_no_friends));
         } else {
             viewHolder.getText().setText(mFriendList.get(position - (mLobbyList.size() + HEADER_COUNT)).getName());
         }

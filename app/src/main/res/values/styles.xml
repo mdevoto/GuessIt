@@ -9,28 +9,33 @@
     </style>
 
     <style name="text_default">
-        <item name="android:textColor">@color/text_main</item>
-        <item name="android:background">@color/text_background_main</item>
+        <item name="android:textColor">@color/mainText</item>
+        <item name="android:background">@color/mainTextBackground</item>
         <item name="android:padding">10dp</item>
     </style>
 
     <!-- Menu items in the main menu screen -->
     <style name="text_menu_item">
-        <item name="android:textColor">@color/text_main</item>
-        <item name="android:background">@color/text_background_main</item>
+        <item name="android:textColor">@color/mainTextBackground</item>
+        <item name="android:background">@color/mainText</item>
         <item name="android:padding">6dp</item>
+        <item name="android:textSize">26dp</item>
     </style>
 
     <!-- Style for lobby items inside game lobby recycler view -->
     <style name="text_lobby_item">
-        <item name="android:textColor">@color/text_main</item>
-        <item name="android:padding">6dp</item>
+        <item name="android:textColor">@color/mainText</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <!-- Loading Text -->
     <style name="text_loading">
-        <item name="android:textColor">@color/text_background_main</item>
-        <item name="android:background">@color/background_main</item>
+        <item name="android:textColor">@color/mainText</item>
+        <item name="android:background">@color/mainBackground</item>
         <item name="android:padding">6dp</item>
     </style>
 

@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_main">
+    android:background="@color/mainBackground">
 
     <com.deevs.guessit.views.TypefaceTextView
         android:id="@+id/empty_msg"
@@ -16,7 +16,7 @@
         android:layout_marginBottom="36dp"
         android:padding="20dp"
         app:font="Roboto-Black.ttf"
-        android:textColor="@color/text_main"
+        android:textColor="@color/mainTextBackground"
         android:textSize="20dp"
-        android:text="Aw. You don't have any Facebook friends. Add friends before you can play!"/>
+        android:text="@string/item_loading_friends"/>
 </FrameLayout>
