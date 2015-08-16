@@ -5,13 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import com.deevs.guessit.R;
 import com.deevs.guessit.views.TypefaceTextView;
 import com.shephertz.app42.paas.sdk.android.social.Social;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
@@ -26,7 +23,7 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
     private static final int VIEWTYPE_ITEM_FRIEND_LOBBY     = 3;
 
     private ArrayList<Social.Friends> mFriendList;
-    private ArrayList<Social.Friends> mLobbyList;
+    private ArrayList<String> mLobbyList;
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
@@ -69,15 +66,22 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
     /**
      * Initialize the dataset of the Adapter.
      *
-     * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
+     * @param friendDataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public LobbyRecyclerAdapter(final ArrayList<Social.Friends> dataSet) {
-        mFriendList = dataSet;
+    public LobbyRecyclerAdapter(final ArrayList<Social.Friends> friendDataSet, final ArrayList<String> lobbyData) {
+        mFriendList = friendDataSet;
+        mLobbyList = lobbyData;
     }
 
     public void refreshFriendData(ArrayList<Social.Friends> friends) {
         this.mFriendList.clear();
         this.mFriendList.addAll(friends);
+        notifyDataSetChanged();
+    }
+
+    public void refreshLobbyData(ArrayList<String> lobbyFriends) {
+        this.mLobbyList.clear();
+        this.mLobbyList.addAll(lobbyFriends);
         notifyDataSetChanged();
     }
 

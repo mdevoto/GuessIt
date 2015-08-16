@@ -1,6 +1,7 @@
 package com.deevs.guessit.activities;
 
 import android.app.Activity;
+import android.net.Network;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +10,6 @@ import android.util.Log;
 
 import com.deevs.guessit.R;
 import com.deevs.guessit.adapters.LobbyRecyclerAdapter;
-import com.deevs.guessit.networking.AccountWrapper;
 import com.deevs.guessit.networking.NetworkManager;
 import com.deevs.guessit.networking.interfaces.NetworkFriendRequestListener;
 import com.shephertz.app42.paas.sdk.android.social.Social;
@@ -20,7 +20,6 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
 
     public static final String TAG = GameLobbyActivity.class.getSimpleName();
 
-    private AccountWrapper mAccount;
     private RecyclerView mLobbyRecyclerView;
     private LobbyRecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutMgr;
@@ -30,12 +29,14 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_lobby);
 
-        mAccount = new AccountWrapper();
-
         mLobbyRecyclerView = (RecyclerView) findViewById(R.id.lobby_list);
         mLobbyRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mAdapter = new LobbyRecyclerAdapter(new ArrayList<Social.Friends>());
+        // Add this current user to the lobby list
+        final ArrayList<String> lobbyList = new ArrayList<>();
+        lobbyList.add(NetworkManager.INSTANCE.getUsername());
+
+        mAdapter = new LobbyRecyclerAdapter(new ArrayList<Social.Friends>(), lobbyList);
         mLobbyRecyclerView.setAdapter(mAdapter);
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
@@ -57,6 +58,9 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
         for(Social.Friends friend : friends) {
             Log.e(TAG, "friend name = " + friend.getName());
         }
+
+        // todo: remove after testing
+        friends.clear();
 
         // refresh the recycler view
         mAdapter.refreshFriendData(friends);

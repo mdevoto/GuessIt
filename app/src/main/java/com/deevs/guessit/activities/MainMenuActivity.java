@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.view.View;
 
 import com.deevs.guessit.R;
-import com.deevs.guessit.networking.AccountWrapper;
+import com.deevs.guessit.networking.NetworkManager;
 import com.deevs.guessit.views.TypefaceTextView;
 import com.facebook.appevents.AppEventsLogger;
 
@@ -60,7 +60,7 @@ public class MainMenuActivity extends Activity {
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AccountWrapper().logout();
+                NetworkManager.INSTANCE.logout();
                 finish();
             }
         });

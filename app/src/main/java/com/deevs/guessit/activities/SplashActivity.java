@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.deevs.guessit.R;
-import com.deevs.guessit.networking.AccountWrapper;
 import com.deevs.guessit.networking.NetworkManager;
 import com.facebook.FacebookSdk;
 
@@ -17,7 +16,6 @@ public class SplashActivity extends Activity {
     private static final int SPLASH_DURATION_MS = 2000;
 
     private Handler mHandler;
-    private AccountWrapper mAccount;
     private Runnable mStartNextActivityDelayed;
 
     @Override
@@ -26,7 +24,6 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
 
         mHandler = new Handler();
-        mAccount = new AccountWrapper();
 
         // Initialize the SDK before executing any other operations,
         // especially, if you're using Facebook UI elements.
@@ -37,7 +34,7 @@ public class SplashActivity extends Activity {
         mStartNextActivityDelayed = new Runnable() {
             @Override
             public void run() {
-                if(!mAccount.isLoggedIn()) {
+                if(!NetworkManager.INSTANCE.isLoggedIn()) {
                     final Intent startLoginScreen = new Intent(getApplicationContext(), LoginAndNetworkSetupActivity.class);
                     startActivity(startLoginScreen);
                 }
@@ -45,7 +42,6 @@ public class SplashActivity extends Activity {
                     final Intent openMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
                     startActivity(openMainMenu);
                 }
-                mAccount = null;
                 finish();
             }
         };

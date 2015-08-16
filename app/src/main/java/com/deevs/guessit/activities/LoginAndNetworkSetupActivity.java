@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.deevs.guessit.R;
-import com.deevs.guessit.networking.AccountWrapper;
+import com.deevs.guessit.networking.NetworkManager;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -37,7 +37,7 @@ public class LoginAndNetworkSetupActivity extends Activity {
         mLoginCallbackMgr = CallbackManager.Factory.create();
 
         // Permission to read user's friends who have the application installed.
-        mLoginBtn.setReadPermissions(AccountWrapper.PERMISSION_READ_FRIENDS);
+        mLoginBtn.setReadPermissions(NetworkManager.PERMISSION_READ_FRIENDS);
         mLoginBtn.registerCallback(mLoginCallbackMgr, new FacebookCallback<LoginResult>() {
 
             @Override
