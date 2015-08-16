@@ -64,7 +64,7 @@ public enum NetworkManager {
                 @Override
                 public void onSuccess(Object response) {
                     final Social social  = (Social)response;
-                    mUsername = social.getUserName();
+                    mUsername = social.getFacebookProfile().getName();
                     Log.e(TAG, "onSuccess (account linked): result User ID = " + social.getUserName());
                     mIsInitialized = true;
                     initListener.initSuccess();

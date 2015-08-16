@@ -22,6 +22,7 @@ public class LoadingGameActivity extends Activity {
             public void initSuccess() {
                 final Intent startLobbyIntent = new Intent(getApplicationContext(), GameLobbyActivity.class);
                 startActivity(startLobbyIntent);
+                finish();
             }
 
             @Override

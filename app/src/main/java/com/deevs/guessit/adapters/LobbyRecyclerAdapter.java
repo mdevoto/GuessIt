@@ -1,5 +1,6 @@
 package com.deevs.guessit.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,9 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
     private static final int VIEWTYPE_ITEM_FRIEND_INVITE    = 2;
     private static final int VIEWTYPE_ITEM_FRIEND_LOBBY     = 3;
 
+    private static final int HEADER_COUNT = 2;
+
+    private Context mContext;
     private ArrayList<Social.Friends> mFriendList;
     private ArrayList<String> mLobbyList;
 
@@ -68,7 +72,9 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
      *
      * @param friendDataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public LobbyRecyclerAdapter(final ArrayList<Social.Friends> friendDataSet, final ArrayList<String> lobbyData) {
+    public LobbyRecyclerAdapter(final Context context, final ArrayList<Social.Friends> friendDataSet,
+                                final ArrayList<String> lobbyData) {
+        mContext = context.getApplicationContext();
         mFriendList = friendDataSet;
         mLobbyList = lobbyData;
     }
@@ -129,13 +135,13 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
         // Get element from your data set at this position and replace the contents of the view
         // with that element.
         if(position == 0 || position == mLobbyList.size() + 1) {
-            viewHolder.getText().setText("Header: pos = " + position);
+            viewHolder.getText().setText(mContext.getString(position == 0 ? R.string.header_lobby : R.string.header_friends));
         } else if(position <= mLobbyList.size()) {
-            viewHolder.getText().setText("Friend/Lobby");
+            viewHolder.getText().setText(mLobbyList.get(position-1));
         } else if(mFriendList.isEmpty()) {
-            viewHolder.getText().setText("EMPTY FRIENDS VIEW.");
+            // Do nothing the text is set on this in the XML.
         } else {
-            viewHolder.getText().setText("Friend/Invite");
+            viewHolder.getText().setText(mFriendList.get(position - (mLobbyList.size() + HEADER_COUNT)).getName());
         }
     }
 
@@ -143,11 +149,10 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
     @Override
     public int getItemCount() {
         // 2 Headers are always visible..
-        final int TWO_HEADER_COUNT = 2;
-        final int ONE_EMPTY_VIEW_COUNT = 2;
+        final int ONE_EMPTY_VIEW_COUNT  = 1;
         return (mFriendList.isEmpty() ?
-                (TWO_HEADER_COUNT + ONE_EMPTY_VIEW_COUNT + mLobbyList.size())
-                : (TWO_HEADER_COUNT + mFriendList.size() + mLobbyList.size())
+                (HEADER_COUNT + ONE_EMPTY_VIEW_COUNT + mLobbyList.size())
+                : (HEADER_COUNT + mFriendList.size() + mLobbyList.size())
         );
     }
 }

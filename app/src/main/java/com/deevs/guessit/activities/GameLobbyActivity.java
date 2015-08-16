@@ -36,7 +36,7 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
         final ArrayList<String> lobbyList = new ArrayList<>();
         lobbyList.add(NetworkManager.INSTANCE.getUsername());
 
-        mAdapter = new LobbyRecyclerAdapter(new ArrayList<Social.Friends>(), lobbyList);
+        mAdapter = new LobbyRecyclerAdapter(this, new ArrayList<Social.Friends>(), lobbyList);
         mLobbyRecyclerView.setAdapter(mAdapter);
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
@@ -58,9 +58,6 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
         for(Social.Friends friend : friends) {
             Log.e(TAG, "friend name = " + friend.getName());
         }
-
-        // todo: remove after testing
-        friends.clear();
 
         // refresh the recycler view
         mAdapter.refreshFriendData(friends);
