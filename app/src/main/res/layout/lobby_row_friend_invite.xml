@@ -19,7 +19,7 @@
     <com.deevs.guessit.views.TypefaceTextView
         android:id="@+id/invite_button"
         android:layout_width="26dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/mainTextBackground"

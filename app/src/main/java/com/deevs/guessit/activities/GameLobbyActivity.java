@@ -37,6 +37,11 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
         final ArrayList<String> lobbyList = new ArrayList<>();
         lobbyList.add(NetworkManager.INSTANCE.getUsername());
 
+        // todo: remove test code
+        for(int i = 0; i < 5; ++i) {
+            lobbyList.add(NetworkManager.INSTANCE.getUsername());
+        }
+
         mAdapter = new LobbyRecyclerAdapter(this, new ArrayList<Social.Friends>(), lobbyList);
         mAdapter.setIsLoadingFriends(true);
         mLobbyRecyclerView.setAdapter(mAdapter);
@@ -56,6 +61,12 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
      **/
     @Override
     public void onCompleted(final ArrayList<Social.Friends> friends) {
+
+        // todo: remove this test
+        for(int i = 0; i < 4; ++i) {
+            friends.addAll(friends);
+        }
+
         Log.e(TAG, "Friends list request completed.");
         mAdapter.setIsLoadingFriends(false);
         for(Social.Friends friend : friends) {

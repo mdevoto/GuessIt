@@ -7,7 +7,7 @@
     <string name="facebook_login_in_progress_text">In progress...</string>
 
     <!-- Lobby related strings -->
-    <string name="header_lobby">Lobby</string>
+    <string name="header_lobby">Game Lobby</string>
     <string name="header_friends">Invite Friends</string>
     <string name="item_loading_friends">Loading friends..</string>
     <string name="item_no_friends">Aw. You don\'t have any Facebook friends. Add friends before you can play!</string>
