@@ -34,8 +34,8 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TypefaceTextView mText    = null;
-        private TypefaceTextView mInviteButton = null;
+        private TypefaceTextView mText          = null;
+        private TypefaceTextView mInviteButton  = null;
 
         public ViewHolder(View v) {
             super(v);

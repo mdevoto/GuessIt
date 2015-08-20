@@ -16,7 +16,7 @@
 
     <!-- Menu items in the main menu screen -->
     <style name="text_menu_item">
-        <item name="android:textColor">@color/mainTextBackground</item>
+        <item name="android:textColor">@color/mainBackground</item>
         <item name="android:background">@color/mainText</item>
         <item name="android:padding">6dp</item>
         <item name="android:textSize">26dp</item>

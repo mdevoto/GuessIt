@@ -42,8 +42,11 @@ public class LoginAndNetworkSetupActivity extends Activity {
 
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.e(TAG, "onSuccess - Facebook Login success");
+                Log.e(TAG, "onSuccess - Facebook Login success. User ID = " + loginResult.getAccessToken().getUserId());
+
+                // TODO: Fade out login button?
                 mLoginBtn.setVisibility(View.INVISIBLE);
+
                 // Login success - Start the main menu now.
                 final Intent startMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
                 startActivity(startMainMenu);

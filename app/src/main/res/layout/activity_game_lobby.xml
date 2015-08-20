@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/mainTextBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.deevs.guessit.views.TypefaceTextView
+        android:id="@+id/start_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:text="Start"
+        android:textSize="36dp"
+        android:textColor="@color/mainBackground"
+        android:background="@color/mainText"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        app:font="Roboto-Black.ttf"/>
 
     <!-- Parent container for current lobby -->
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/mainBackground"
-        android:id="@+id/lobby_list">
+        android:id="@+id/lobby_list"
+        android:layout_above="@id/start_button">
     </android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+</RelativeLayout>

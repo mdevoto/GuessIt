@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Create Game"
-            app:font="Roboto-Regular.ttf"
+            app:font="Roboto-Black.ttf"
             android:layout_gravity="center"
             android:gravity="center"
             style="@style/text_menu_item"/>
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Pending Invitations"
-            app:font="Roboto-Regular.ttf"
+            app:font="Roboto-Black.ttf"
             android:layout_gravity="center"
             android:gravity="center"
             style="@style/text_menu_item"/>
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Friends List"
-            app:font="Roboto-Regular.ttf"
+            app:font="Roboto-Black.ttf"
             android:layout_gravity="center"
             android:gravity="center"
             style="@style/text_menu_item"/>
@@ -57,10 +57,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="How to Play"
-            app:font="Roboto-Regular.ttf"
+            app:font="Roboto-Black.ttf"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="@color/mainTextBackground"
             style="@style/text_menu_item"/>
 
         <com.deevs.guessit.views.TypefaceTextView
@@ -68,10 +67,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Logout"
-            app:font="Roboto-Regular.ttf"
+            app:font="Roboto-Black.ttf"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="@color/mainTextBackground"
             style="@style/text_menu_item"/>
     </LinearLayout>
 </RelativeLayout>

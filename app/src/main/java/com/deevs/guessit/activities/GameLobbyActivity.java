@@ -7,11 +7,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.deevs.guessit.R;
 import com.deevs.guessit.adapters.LobbyRecyclerAdapter;
 import com.deevs.guessit.networking.NetworkManager;
 import com.deevs.guessit.networking.interfaces.NetworkFriendRequestListener;
+import com.deevs.guessit.views.TypefaceTextView;
 import com.shephertz.app42.paas.sdk.android.social.Social;
 
 import java.util.ArrayList;
@@ -20,15 +22,24 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
 
     public static final String TAG = GameLobbyActivity.class.getSimpleName();
 
+    private TypefaceTextView mStartButton;
     private RecyclerView mLobbyRecyclerView;
     private LobbyRecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutMgr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.e(TAG, "onCreate..");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_lobby);
+
+        mStartButton = (TypefaceTextView) findViewById(R.id.start_button);
+        mStartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Have start game logic begin here
+                handleStartGameClick();
+            }
+        });
 
         mLobbyRecyclerView = (RecyclerView) findViewById(R.id.lobby_list);
         mLobbyRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -38,7 +49,7 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
         lobbyList.add(NetworkManager.INSTANCE.getUsername());
 
         // todo: remove test code
-        for(int i = 0; i < 5; ++i) {
+        for(int i = 0; i < 3; ++i) {
             lobbyList.add(NetworkManager.INSTANCE.getUsername());
         }
 
@@ -63,7 +74,7 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
     public void onCompleted(final ArrayList<Social.Friends> friends) {
 
         // todo: remove this test
-        for(int i = 0; i < 4; ++i) {
+        for(int i = 0; i < 2; ++i) {
             friends.addAll(friends);
         }
 
@@ -71,9 +82,17 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
         mAdapter.setIsLoadingFriends(false);
         for(Social.Friends friend : friends) {
             Log.e(TAG, "friend name = " + friend.getName());
+            Log.e(TAG, "friend id = " + friend.getId());
         }
 
         // refresh the recycler view
         mAdapter.refreshFriendData(friends);
+    }
+
+    /**
+     * Start game logic. From the start button click
+     * */
+    private void handleStartGameClick() {
+
     }
 }

@@ -16,6 +16,8 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.shephertz.app42.paas.sdk.android.App42API;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
+import com.shephertz.app42.paas.sdk.android.message.Queue;
+import com.shephertz.app42.paas.sdk.android.message.QueueService;
 import com.shephertz.app42.paas.sdk.android.social.Social;
 import com.shephertz.app42.paas.sdk.android.social.SocialService;
 
@@ -25,14 +27,21 @@ import java.util.List;
 public enum NetworkManager {
     INSTANCE;
 
-    private String mUsername;
+    private Context mContext;
 
+    private String mPlayerName;
     private boolean mIsInitialized;
     private SocialService mSocialService;
+
+    private Queue mInvitationQueue;
+    private QueueService mQueueService;
+    private String mInvitationQueueName;
 
     private static final String TAG = NetworkManager.class.getSimpleName();
     private static final String sApiKey = "4318a961bea828a55a22ae9d065fadfc6d33e2c28add091f3d7a16a00824b1a4";
     private static final String sSecret = "d44a9b937169ea6f04011c7cfcc159a0e511b29f3817613aec05d9209b69bd8a";
+
+    private static final String sInvitationQueueDesc = "Queue utilized for invitations";
 
     public static final String PERMISSION_READ_FRIENDS = "user_friends";
 
@@ -52,35 +61,74 @@ public enum NetworkManager {
      **/
     public void init(final Context context, final NetworkManagerInitListener initListener) {
         if(context != null && isLoggedIn()) {
-            App42API.initialize(context.getApplicationContext(), sApiKey, sSecret);
-
-            // Build the social service after init and connect it to the Facebook credentials..
-            mSocialService = App42API.buildSocialService();
-
-            final AccessToken token = getAccessToken();
-            // Connect the Facebook account with App42 for additional support functionality
-            // and wrapping of trivial tasks like getting friends' list..
-            mSocialService.linkUserFacebookAccount(token.getUserId(), token.getToken(), new App42CallBack() {
-                @Override
-                public void onSuccess(Object response) {
-                    final Social social  = (Social)response;
-                    mUsername = social.getFacebookProfile().getName();
-                    Log.e(TAG, "onSuccess (account linked): result User ID = " + social.getUserName());
-                    mIsInitialized = true;
-                    initListener.initSuccess();
-                }
-
-                @Override
-                public void onException(Exception e) {
-                    Log.e(TAG, "onException: exception = " + e.getMessage());
-                    initListener.initFailure();
-                }
-            });
+            mContext = context.getApplicationContext();
+            doInitialization(initListener);
         }
         else {
             // TODO: Make a login attept using the account, in the listener for that, try and linkUserFacebookAccount again
             // TODO: Then callback the initListener
+            // // todo - or throw an error?
         }
+    }
+
+    private void doInitialization(final NetworkManagerInitListener initListener) {
+        App42API.initialize(mContext.getApplicationContext(), sApiKey, sSecret);
+
+        // Build the social service after init and connect it to the Facebook credentials..
+        mSocialService = App42API.buildSocialService();
+
+        final AccessToken token = getAccessToken();
+        // Connect the Facebook account with App42 for additional support functionality
+        // and wrapping of trivial tasks like getting friends' list..
+        mSocialService.linkUserFacebookAccount(token.getUserId(), token.getToken(), new App42CallBack() {
+            @Override
+            public void onSuccess(Object response) {
+                final Social social = (Social) response;
+                mPlayerName = social.getFacebookProfile().getName();
+                Log.e(TAG, "onSuccess (account linked): result User ID = " + social.getUserName());
+
+                // Build the QueueService used for listening for game invitations, etc.
+                mQueueService = App42API.buildQueueService();
+
+                // Build an invitation room name using player name and their unique ID
+                // TODO: Check that User ID and friend ID are unique AND matching..or this is fucked.
+                mInvitationQueueName = new StringBuilder().append(mPlayerName)
+                        .append(getAccessToken().getUserId()).toString().replaceAll("\\s","");
+
+                mQueueService.createPullQueue(mInvitationQueueName, sInvitationQueueDesc,
+                        new App42CallBack() {
+                            @Override
+                            public void onSuccess(Object response) {
+                                mInvitationQueue = (Queue) response;
+                                Log.e(TAG, "queueName is " + mInvitationQueue.getQueueName());
+                                Log.e(TAG, "queueType is " + mInvitationQueue.getQueueType());
+                                Log.e(TAG, "queueDescription is " + mInvitationQueue.getDescription());
+
+                                mIsInitialized = true;
+                                initListener.initSuccess();
+                            }
+
+                            @Override
+                            public void onException(Exception e) {
+                                Log.e(TAG, "onException (createPullQueue): exception = " + e.getMessage());
+                                initFailed(initListener);
+                            }
+                        });
+            }
+
+            @Override
+            public void onException(Exception e) {
+                Log.e(TAG, "onException (linkFacebookAccount): exception = " + e.getMessage());
+                initFailed(initListener);
+            }
+        });
+    }
+
+    private void initFailed(final NetworkManagerInitListener initListener) {
+        if(initListener != null) {
+            initListener.initFailure();
+        }
+        mIsInitialized = false;
     }
 
     public boolean isNetworkAvailable(final Context context) {
@@ -142,12 +190,20 @@ public enum NetworkManager {
     }
 
     public String getUsername() {
-        return mUsername;
+        return mPlayerName;
     }
 
     public void logout() {
         if(isLoggedIn()) {
             LoginManager.getInstance().logOut();
         }
+    }
+
+    /**
+     * Messages related to the invitation queue
+     **/
+
+    public void getPendingMessages(final App42CallBack callback) {
+        //todo
     }
 }
