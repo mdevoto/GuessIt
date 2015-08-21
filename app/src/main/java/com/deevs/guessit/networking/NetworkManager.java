@@ -7,6 +7,8 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.deevs.guessit.R;
+import com.deevs.guessit.Utils.Utils;
 import com.deevs.guessit.networking.interfaces.NetworkFriendRequestListener;
 import com.deevs.guessit.networking.interfaces.NetworkManagerInitListener;
 import com.facebook.AccessToken;
@@ -15,6 +17,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.shephertz.app42.paas.sdk.android.App42API;
+import com.shephertz.app42.paas.sdk.android.App42BadParameterException;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
 import com.shephertz.app42.paas.sdk.android.message.Queue;
 import com.shephertz.app42.paas.sdk.android.message.QueueService;
@@ -27,6 +30,12 @@ import java.util.List;
 public enum NetworkManager {
     INSTANCE;
 
+    private static final String TAG = NetworkManager.class.getSimpleName();
+    private static final String sApiKey = "4318a961bea828a55a22ae9d065fadfc6d33e2c28add091f3d7a16a00824b1a4";
+    private static final String sSecret = "d44a9b937169ea6f04011c7cfcc159a0e511b29f3817613aec05d9209b69bd8a";
+    private static final String sInvitationQueueDesc = "Queue utilized for invitations";
+    public static final String PERMISSION_READ_FRIENDS = "user_friends";
+
     private Context mContext;
 
     private String mPlayerName;
@@ -37,13 +46,18 @@ public enum NetworkManager {
     private QueueService mQueueService;
     private String mInvitationQueueName;
 
-    private static final String TAG = NetworkManager.class.getSimpleName();
-    private static final String sApiKey = "4318a961bea828a55a22ae9d065fadfc6d33e2c28add091f3d7a16a00824b1a4";
-    private static final String sSecret = "d44a9b937169ea6f04011c7cfcc159a0e511b29f3817613aec05d9209b69bd8a";
-
-    private static final String sInvitationQueueDesc = "Queue utilized for invitations";
-
-    public static final String PERMISSION_READ_FRIENDS = "user_friends";
+    /**
+     * Message/Queue Service Error and Application Codes
+     **/
+    private final int QUEUE_BAD_REQUEST             = 1400; // The Request parameters are invalid.
+    private final int QUEUE_UNAUTHORIZED_CLIENT     = 1401; // Client is not authorized.
+    private final int QUEUE_INTERNAL_SERVER_ERROR   = 1500; // Internal Server Error. Please try again.
+    private final int QUEUE_NOT_FOUND               = 2400; // Queue with the name '@queueName' not found.
+    private final int QUEUE_NOT_FOUND_EMPTY         = 2401; // Queue with the name '@queueName' does not have any messages.
+    private final int QUEUE_NOT_FOUND_EMPTY_ID      = 2402; // Queue with the name '@queueName' and correlationId '@correlationId' does not have any messages.
+    private final int QUEUE_NOT_FOUND_EXISTS        = 2403; // Queue by the name '@queueName' already exists.
+    private final int QUEUE_INVALID_PARAMS          = 2404; // The request parameters are invalid. This action is only applicable for PULL type queue.
+    private final int QUEUE_NOT_FOUND_PENDING_EMPTY = 2405; // Queue with the name '@queueName' does not have any pending messages.
 
     private void checkInitialized() {
         if(!mIsInitialized) {
@@ -91,9 +105,7 @@ public enum NetworkManager {
                 mQueueService = App42API.buildQueueService();
 
                 // Build an invitation room name using player name and their unique ID
-                // TODO: Check that User ID and friend ID are unique AND matching..or this is fucked.
-                mInvitationQueueName = new StringBuilder().append(mPlayerName)
-                        .append(getAccessToken().getUserId()).toString().replaceAll("\\s","");
+                mInvitationQueueName = getInviteQueueName(mPlayerName, getAccessToken().getUserId());
 
                 mQueueService.createPullQueue(mInvitationQueueName, sInvitationQueueDesc,
                         new App42CallBack() {
@@ -111,7 +123,20 @@ public enum NetworkManager {
                             @Override
                             public void onException(Exception e) {
                                 Log.e(TAG, "onException (createPullQueue): exception = " + e.getMessage());
-                                initFailed(initListener);
+
+                                // Check if this is an App42 Exception, if so, we can handle the response.
+                                if(e instanceof App42BadParameterException) {
+                                    final App42BadParameterException badParamExc = (App42BadParameterException) e;
+
+                                    // If this exception is thrown for queue already exists, it means
+                                    // that the application
+                                    if(badParamExc.getAppErrorCode() == QUEUE_NOT_FOUND_EXISTS) {
+                                        mIsInitialized = true;
+                                        initListener.initSuccess();
+                                        return;
+                                    }
+                                }
+                                initFailed(initListener, e.getMessage());
                             }
                         });
             }
@@ -119,14 +144,14 @@ public enum NetworkManager {
             @Override
             public void onException(Exception e) {
                 Log.e(TAG, "onException (linkFacebookAccount): exception = " + e.getMessage());
-                initFailed(initListener);
+                initFailed(initListener, e.getMessage());
             }
         });
     }
 
-    private void initFailed(final NetworkManagerInitListener initListener) {
+    private void initFailed(final NetworkManagerInitListener initListener, final String errorMsg) {
         if(initListener != null) {
-            initListener.initFailure();
+            initListener.initFailure(errorMsg);
         }
         mIsInitialized = false;
     }
@@ -189,7 +214,7 @@ public enum NetworkManager {
         return AccessToken.getCurrentAccessToken();
     }
 
-    public String getUsername() {
+    public String getPlayerName() {
         return mPlayerName;
     }
 
@@ -202,8 +227,29 @@ public enum NetworkManager {
     /**
      * Messages related to the invitation queue
      **/
+    public void inviteFriendToGame(final String friendName, final String friendId, final App42CallBack callback) {
+        mQueueService.sendMessage(
+                getInviteQueueName(friendName, friendId),
+                mContext.getString(R.string.invite),
+                3600000,
+                new App42CallBack() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        Log.e(TAG, "inviteFriendToGame Success.");
+                        callback.onSuccess(o);
+                    }
 
-    public void getPendingMessages(final App42CallBack callback) {
-        //todo
+                    @Override
+                    public void onException(Exception e) {
+                        Log.e(TAG, "inviteFriendToGame onException e = " + e.getMessage());
+                        callback.onException(e);
+                    }
+                });
+    }
+
+    public String getInviteQueueName(final String name, final String id) {
+        return Utils.removeSpacesAndTabs(new StringBuilder(name)
+                .append(id)
+                .append(mContext.getString(R.string.invite)).toString());
     }
 }

@@ -1,7 +1,6 @@
 package com.deevs.guessit.activities;
 
 import android.app.Activity;
-import android.net.Network;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,7 +35,6 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Have start game logic begin here
                 handleStartGameClick();
             }
         });
@@ -46,12 +44,7 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
 
         // Add this current user to the lobby list
         final ArrayList<String> lobbyList = new ArrayList<>();
-        lobbyList.add(NetworkManager.INSTANCE.getUsername());
-
-        // todo: remove test code
-        for(int i = 0; i < 3; ++i) {
-            lobbyList.add(NetworkManager.INSTANCE.getUsername());
-        }
+        lobbyList.add(NetworkManager.INSTANCE.getPlayerName());
 
         mAdapter = new LobbyRecyclerAdapter(this, new ArrayList<Social.Friends>(), lobbyList);
         mAdapter.setIsLoadingFriends(true);
@@ -72,27 +65,14 @@ public class GameLobbyActivity extends Activity implements NetworkFriendRequestL
      **/
     @Override
     public void onCompleted(final ArrayList<Social.Friends> friends) {
-
-        // todo: remove this test
-        for(int i = 0; i < 2; ++i) {
-            friends.addAll(friends);
-        }
-
-        Log.e(TAG, "Friends list request completed.");
+        Log.e(TAG, "Friends list request completed. Friend list size = " + friends.size());
+        // Refresh the recycler view
         mAdapter.setIsLoadingFriends(false);
-        for(Social.Friends friend : friends) {
-            Log.e(TAG, "friend name = " + friend.getName());
-            Log.e(TAG, "friend id = " + friend.getId());
-        }
-
-        // refresh the recycler view
         mAdapter.refreshFriendData(friends);
     }
 
     /**
      * Start game logic. From the start button click
      * */
-    private void handleStartGameClick() {
-
-    }
+    private void handleStartGameClick() {}
 }
