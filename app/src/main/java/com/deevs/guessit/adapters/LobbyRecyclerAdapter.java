@@ -52,7 +52,6 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
                     mInviteButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            // todo: define invite logic using tag
                             Log.e(TAG, "onInviteClick TAG = " + view.getTag().toString());
                             NetworkManager.INSTANCE.inviteFriendToGame(view.getTag().toString(), new App42CallBack() {
                                 @Override

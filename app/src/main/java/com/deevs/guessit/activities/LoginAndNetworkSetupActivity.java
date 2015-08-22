@@ -24,7 +24,6 @@ public class LoginAndNetworkSetupActivity extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        mLoginBtn.registerCallback(null, null);
         finish();
     }
 

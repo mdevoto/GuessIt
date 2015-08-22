@@ -200,7 +200,6 @@ public enum NetworkManager {
     }
 
     public void login(final Activity ctxActivity, final FacebookCallback<LoginResult> callback) {
-        checkInitialized();
         // Register here for the login callback using the passed in callback..
         final CallbackManager callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager, callback);
@@ -221,7 +220,6 @@ public enum NetworkManager {
     }
 
     public void logout() {
-        checkInitialized();
         if(isLoggedIn()) {
             LoginManager.getInstance().logOut();
         }

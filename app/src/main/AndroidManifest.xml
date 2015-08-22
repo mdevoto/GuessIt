@@ -63,6 +63,13 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <!-- Pending Invites screen -->
+        <activity
+            android:name=".activities.PendingInvitesActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+        </activity>
+
         <!-- Required for use with Facebook SDK -->
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 

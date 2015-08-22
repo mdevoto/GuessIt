@@ -35,6 +35,17 @@ public class MainMenuActivity extends Activity {
         AppEventsLogger.deactivateApp(this);
     }
 
+    private void startNewActivityRunnable(final Class<?> className) {
+        final Runnable activityRunnable = new Runnable() {
+            @Override
+            public void run() {
+                final Intent activityIntent = new Intent(getApplicationContext(), className);
+                startActivity(activityIntent);
+            }
+        };
+        new Handler().post(activityRunnable);
+    }
+
     private void setupClickListeners() {
         // Create a new game button.
         // TODO: Should be 'Current Game' if already in a game.
@@ -44,14 +55,7 @@ public class MainMenuActivity extends Activity {
         createGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Runnable gameLobbyRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        final Intent startLoadingIntent = new Intent(getApplicationContext(), LoadingGameActivity.class);
-                        startActivity(startLoadingIntent);
-                    }
-                };
-                new Handler().post(gameLobbyRunnable);
+                startNewActivityRunnable(LoadingGameActivity.class);
             }
         });
 
@@ -62,6 +66,15 @@ public class MainMenuActivity extends Activity {
             public void onClick(View view) {
                 NetworkManager.INSTANCE.logout();
                 finish();
+            }
+        });
+
+        // Logout button
+        final TypefaceTextView invitesButton = (TypefaceTextView) findViewById(R.id.pending_invites);
+        invitesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startNewActivityRunnable(PendingInvitesActivity.class);
             }
         });
     }

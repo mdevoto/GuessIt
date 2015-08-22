@@ -36,6 +36,7 @@
             style="@style/text_menu_item"/>
 
         <com.deevs.guessit.views.TypefaceTextView
+            android:id="@+id/pending_invites"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Pending Invitations"
