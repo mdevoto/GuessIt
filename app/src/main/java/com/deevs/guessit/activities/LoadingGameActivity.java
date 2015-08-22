@@ -24,8 +24,8 @@ public class LoadingGameActivity extends Activity {
         NetworkManager.INSTANCE.init(this, new NetworkManagerInitListener() {
             @Override
             public void initSuccess() {
-                final Intent startLobbyIntent = new Intent(getApplicationContext(), GameLobbyActivity.class);
-                startActivity(startLobbyIntent);
+                final Intent startMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
+                startActivity(startMainMenu);
                 finish();
             }
 

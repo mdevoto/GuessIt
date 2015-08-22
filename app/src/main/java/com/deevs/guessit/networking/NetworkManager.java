@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.deevs.guessit.R;
-import com.deevs.guessit.Utils.Utils;
+import com.deevs.guessit.utils.Utils;
 import com.deevs.guessit.networking.interfaces.NetworkFriendRequestListener;
 import com.deevs.guessit.networking.interfaces.NetworkManagerInitListener;
 import com.facebook.AccessToken;

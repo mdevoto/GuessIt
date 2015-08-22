@@ -47,8 +47,8 @@ public class LoginAndNetworkSetupActivity extends Activity {
                 mLoginBtn.setVisibility(View.INVISIBLE);
 
                 // Login success - Start the main menu now.
-                final Intent startMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
-                startActivity(startMainMenu);
+                final Intent startGameSetup = new Intent(getApplicationContext(), LoadingGameActivity.class);
+                startActivity(startGameSetup);
                 finish();
             }
 
