@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.deevs.guessit.R;
 import com.deevs.guessit.networking.NetworkManager;
 import com.deevs.guessit.views.TypefaceTextView;
+import com.shephertz.app42.paas.sdk.android.App42CallBack;
 import com.shephertz.app42.paas.sdk.android.social.Social;
 import java.util.ArrayList;
 
@@ -52,7 +53,18 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
                         @Override
                         public void onClick(View view) {
                             // todo: define invite logic using tag
-                            Log.e(TAG, "onInviteClick TAG = " + view.getTag());
+                            Log.e(TAG, "onInviteClick TAG = " + view.getTag().toString());
+                            NetworkManager.INSTANCE.inviteFriendToGame(view.getTag().toString(), new App42CallBack() {
+                                @Override
+                                public void onSuccess(Object o) {
+                                    Log.e(TAG, "onSuccess - Invite sent");
+                                }
+
+                                @Override
+                                public void onException(Exception e) {
+                                    Log.e(TAG, "onException - Invite not sent, reason = " + e.getMessage());
+                                }
+                            });
                         }
                     });
                     break;

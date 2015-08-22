@@ -200,6 +200,7 @@ public enum NetworkManager {
     }
 
     public void login(final Activity ctxActivity, final FacebookCallback<LoginResult> callback) {
+        checkInitialized();
         // Register here for the login callback using the passed in callback..
         final CallbackManager callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager, callback);
@@ -215,21 +216,24 @@ public enum NetworkManager {
     }
 
     public String getPlayerName() {
+        checkInitialized();
         return mPlayerName;
     }
 
     public void logout() {
+        checkInitialized();
         if(isLoggedIn()) {
             LoginManager.getInstance().logOut();
         }
     }
 
     /**
-     * Messages related to the invitation queue
+     * Methods related to the invitation queue
      **/
-    public void inviteFriendToGame(final String friendName, final String friendId, final App42CallBack callback) {
+    public void inviteFriendToGame(final String inviteQueueName, final App42CallBack callback) {
+        checkInitialized();
         mQueueService.sendMessage(
-                getInviteQueueName(friendName, friendId),
+                inviteQueueName,
                 mContext.getString(R.string.invite),
                 3600000,
                 new App42CallBack() {
@@ -245,6 +249,32 @@ public enum NetworkManager {
                         callback.onException(e);
                     }
                 });
+    }
+
+    /**
+     * Checks the invite queue for any game invitations
+     **/
+    public void getGameInvitations() {
+        checkInitialized();
+        mQueueService.receiveMessage(mInvitationQueueName, 10 * 1000, new App42CallBack() {
+            public void onSuccess(Object response)
+            {
+                Queue queue  = (Queue)response;
+                System.out.println("queueName is " + queue.getQueueName());
+                System.out.println("queueType is " + queue.getQueueType());
+                ArrayList<Queue.Message> messageList = queue.getMessageList();
+                for(Queue.Message message : messageList)
+                {
+                    System.out.println("correlationId is " + message.getCorrelationId());
+                    System.out.println("messageId is " + message.getMessageId());
+                    System.out.println("payLoad is " + message.getPayLoad());
+                }
+            }
+            public void onException(Exception ex)
+            {
+                System.out.println("Exception Message"+ex.getMessage());
+            }
+        });
     }
 
     public String getInviteQueueName(final String name, final String id) {
