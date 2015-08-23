@@ -39,6 +39,7 @@ public class LoadingGameActivity extends Activity {
 
     private void showFailureToConnectUi(final String errorMsg) {
         // Show an error toast for failed login and do nothing..
+        // TODO: Show a real UI that isn't a shitty toast.
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

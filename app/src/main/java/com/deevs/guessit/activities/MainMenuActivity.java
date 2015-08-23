@@ -55,7 +55,7 @@ public class MainMenuActivity extends Activity {
         createGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startNewActivityRunnable(LoadingGameActivity.class);
+                startNewActivityRunnable(GameLobbyActivity.class);
             }
         });
 

@@ -136,7 +136,7 @@ public enum NetworkManager {
                                     final App42BadParameterException badParamExc = (App42BadParameterException) e;
 
                                     // If this exception is thrown for queue already exists, it means
-                                    // that the application
+                                    // that the application has already been run before?
                                     if(badParamExc.getAppErrorCode() == QUEUE_NOT_FOUND_EXISTS) {
                                         setupPushService(initListener);
                                         return;
@@ -176,19 +176,23 @@ public enum NetworkManager {
                     @Override
                     public void onSuccess(Object response) {
                         PushNotification pushNotification  = (PushNotification)response;
+
                         Log.e(TAG, "push message = " + pushNotification.getMessage()
                                 + " channel list size = " + pushNotification.getChannelList().size());
+
+                        ArrayList<PushNotification.Channel> channelList = pushNotification.getChannelList();
+                        for(PushNotification.Channel channelObj : channelList)
+                        {
+                            System.out.println("channelName is " + channelObj.getName());
+                            System.out.println("Description is " +  channelObj.getDescription());
+                        }
+
                         initSuccess(listener);
                     }
 
                     @Override
                     public void onException(Exception e) {
-                        if(e instanceof App42BadParameterException) {
-                            final App42BadParameterException bpe = (App42BadParameterException) e;
-                        }
-                        else {
-                            initFailed(listener, e.getMessage());
-                        }
+                        initFailed(listener, e.getMessage());
                     }
         });
     }
@@ -291,25 +295,9 @@ public enum NetworkManager {
     /**
      * Checks the invite queue for any game invitations
      **/
-    public void getGameInvitations() {
+    public void getGameInvitations(final App42CallBack callback) {
         checkInitialized();
-        mQueueService.receiveMessage(mInvitationQueueName, 10 * 1000, new App42CallBack() {
-            public void onSuccess(Object response) {
-                Queue queue = (Queue) response;
-                System.out.println("queueName is " + queue.getQueueName());
-                System.out.println("queueType is " + queue.getQueueType());
-                ArrayList<Queue.Message> messageList = queue.getMessageList();
-                for (Queue.Message message : messageList) {
-                    System.out.println("correlationId is " + message.getCorrelationId());
-                    System.out.println("messageId is " + message.getMessageId());
-                    System.out.println("payLoad is " + message.getPayLoad());
-                }
-            }
-
-            public void onException(Exception ex) {
-                System.out.println("Exception Message" + ex.getMessage());
-            }
-        });
+        mQueueService.pendingMessages(mInvitationQueueName, callback);
     }
 
     public String getInviteQueueName(final String name, final String id) {
