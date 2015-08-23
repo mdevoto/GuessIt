@@ -5,9 +5,6 @@ import android.os.Bundle;
 
 import com.deevs.guessit.networking.NetworkManager;
 
-/**
- * Created by c20demo on 8/22/2015.
- */
 public class PendingInvitesActivity extends Activity {
 
     @Override

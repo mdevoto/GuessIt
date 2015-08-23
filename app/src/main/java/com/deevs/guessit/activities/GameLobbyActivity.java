@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.deevs.guessit.R;
 import com.deevs.guessit.adapters.LobbyRecyclerAdapter;
+import com.deevs.guessit.gameplay.GameManager;
 import com.deevs.guessit.networking.NetworkManager;
 import com.deevs.guessit.networking.interfaces.NetworkFriendRequestListener;
 import com.deevs.guessit.views.TypefaceTextView;

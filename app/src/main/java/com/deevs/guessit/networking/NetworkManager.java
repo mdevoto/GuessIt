@@ -21,6 +21,8 @@ import com.shephertz.app42.paas.sdk.android.App42BadParameterException;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
 import com.shephertz.app42.paas.sdk.android.message.Queue;
 import com.shephertz.app42.paas.sdk.android.message.QueueService;
+import com.shephertz.app42.paas.sdk.android.push.PushNotification;
+import com.shephertz.app42.paas.sdk.android.push.PushNotificationService;
 import com.shephertz.app42.paas.sdk.android.social.Social;
 import com.shephertz.app42.paas.sdk.android.social.SocialService;
 
@@ -40,6 +42,7 @@ public enum NetworkManager {
 
     private String mPlayerName;
     private boolean mIsInitialized;
+    private PushNotificationService mPushService;
     private SocialService mSocialService;
 
     private Queue mInvitationQueue;
@@ -58,6 +61,11 @@ public enum NetworkManager {
     private final int QUEUE_NOT_FOUND_EXISTS        = 2403; // Queue by the name '@queueName' already exists.
     private final int QUEUE_INVALID_PARAMS          = 2404; // The request parameters are invalid. This action is only applicable for PULL type queue.
     private final int QUEUE_NOT_FOUND_PENDING_EMPTY = 2405; // Queue with the name '@queueName' does not have any pending messages.
+
+    /**
+     * Push Notifcation application error codes
+     **/
+    private final int PUSH_CHANNEL_EXISTS           = 1701; // Game channel already exists
 
     private void checkInitialized() {
         if(!mIsInitialized) {
@@ -99,11 +107,11 @@ public enum NetworkManager {
             public void onSuccess(Object response) {
                 final Social social = (Social) response;
                 mPlayerName = social.getFacebookProfile().getName();
+
                 Log.e(TAG, "onSuccess (account linked): result User ID = " + social.getUserName());
 
                 // Build the QueueService used for listening for game invitations, etc.
                 mQueueService = App42API.buildQueueService();
-
                 // Build an invitation room name using player name and their unique ID
                 mInvitationQueueName = getInviteQueueName(mPlayerName, getAccessToken().getUserId());
 
@@ -116,8 +124,7 @@ public enum NetworkManager {
                                 Log.e(TAG, "queueType is " + mInvitationQueue.getQueueType());
                                 Log.e(TAG, "queueDescription is " + mInvitationQueue.getDescription());
 
-                                mIsInitialized = true;
-                                initListener.initSuccess();
+                                setupPushService(initListener);
                             }
 
                             @Override
@@ -131,8 +138,7 @@ public enum NetworkManager {
                                     // If this exception is thrown for queue already exists, it means
                                     // that the application
                                     if(badParamExc.getAppErrorCode() == QUEUE_NOT_FOUND_EXISTS) {
-                                        mIsInitialized = true;
-                                        initListener.initSuccess();
+                                        setupPushService(initListener);
                                         return;
                                     }
                                 }
@@ -156,6 +162,37 @@ public enum NetworkManager {
         mIsInitialized = false;
     }
 
+    private void initSuccess(final NetworkManagerInitListener initListener) {
+        mIsInitialized = true;
+        initListener.initSuccess();
+    }
+
+    private void setupPushService(final NetworkManagerInitListener listener) {
+        mPushService = App42API.buildPushNotificationService();
+        mPushService.createChannelForApp(
+                getGameChannelName(getAccessToken().getUserId()),
+                mContext.getString(R.string.game_channel_desc),
+                new App42CallBack() {
+                    @Override
+                    public void onSuccess(Object response) {
+                        PushNotification pushNotification  = (PushNotification)response;
+                        Log.e(TAG, "push message = " + pushNotification.getMessage()
+                                + " channel list size = " + pushNotification.getChannelList().size());
+                        initSuccess(listener);
+                    }
+
+                    @Override
+                    public void onException(Exception e) {
+                        if(e instanceof App42BadParameterException) {
+                            final App42BadParameterException bpe = (App42BadParameterException) e;
+                        }
+                        else {
+                            initFailed(listener, e.getMessage());
+                        }
+                    }
+        });
+    }
+
     public boolean isNetworkAvailable(final Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
@@ -176,7 +213,7 @@ public enum NetworkManager {
         checkInitialized();
         if(listener == null) return;
 
-        final AccessToken token = AccessToken.getCurrentAccessToken();
+        final AccessToken token = getAccessToken();
         final AsyncTask task = new AsyncTask<Void, Void, ArrayList<Social.Friends>>() {
 
             @Override
@@ -196,7 +233,7 @@ public enum NetworkManager {
     }
 
     public boolean isLoggedIn() {
-        return AccessToken.getCurrentAccessToken() != null;
+        return getAccessToken() != null;
     }
 
     public void login(final Activity ctxActivity, final FacebookCallback<LoginResult> callback) {
@@ -232,7 +269,7 @@ public enum NetworkManager {
         checkInitialized();
         mQueueService.sendMessage(
                 inviteQueueName,
-                mContext.getString(R.string.invite),
+                getGameChannelName(getAccessToken().getUserId()),
                 3600000,
                 new App42CallBack() {
                     @Override
@@ -245,6 +282,8 @@ public enum NetworkManager {
                     public void onException(Exception e) {
                         Log.e(TAG, "inviteFriendToGame onException e = " + e.getMessage());
                         callback.onException(e);
+
+                        // TODO: If it fails, and still in lobby, then retry sending this same request.
                     }
                 });
     }
@@ -255,22 +294,20 @@ public enum NetworkManager {
     public void getGameInvitations() {
         checkInitialized();
         mQueueService.receiveMessage(mInvitationQueueName, 10 * 1000, new App42CallBack() {
-            public void onSuccess(Object response)
-            {
-                Queue queue  = (Queue)response;
+            public void onSuccess(Object response) {
+                Queue queue = (Queue) response;
                 System.out.println("queueName is " + queue.getQueueName());
                 System.out.println("queueType is " + queue.getQueueType());
                 ArrayList<Queue.Message> messageList = queue.getMessageList();
-                for(Queue.Message message : messageList)
-                {
+                for (Queue.Message message : messageList) {
                     System.out.println("correlationId is " + message.getCorrelationId());
                     System.out.println("messageId is " + message.getMessageId());
                     System.out.println("payLoad is " + message.getPayLoad());
                 }
             }
-            public void onException(Exception ex)
-            {
-                System.out.println("Exception Message"+ex.getMessage());
+
+            public void onException(Exception ex) {
+                System.out.println("Exception Message" + ex.getMessage());
             }
         });
     }
@@ -279,5 +316,9 @@ public enum NetworkManager {
         return Utils.removeSpacesAndTabs(new StringBuilder(name)
                 .append(id)
                 .append(mContext.getString(R.string.invite)).toString());
+    }
+
+    public String getGameChannelName(final String friendId) {
+        return Utils.removeSpacesAndTabs(new StringBuilder(friendId).append(mContext.getString(R.string.game)).toString());
     }
 }

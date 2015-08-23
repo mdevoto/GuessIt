@@ -12,4 +12,6 @@
     <string name="item_loading_friends">Loading friends..</string>
     <string name="item_no_friends">Aw. You don\'t have any Facebook friends. Add friends before you can play!</string>
     <string name="invite">Invite</string>
+    <string name="game">Game</string>
+    <string name="game_channel_desc">Game Session Channel</string>
 </resources>
