@@ -57,11 +57,13 @@ public class LobbyRecyclerAdapter extends RecyclerView.Adapter<LobbyRecyclerAdap
                                 @Override
                                 public void onSuccess(Object o) {
                                     Log.e(TAG, "onSuccess - Invite sent");
+                                    // todo: remove the person from the list and move into lobby
                                 }
 
                                 @Override
                                 public void onException(Exception e) {
                                     Log.e(TAG, "onException - Invite not sent, reason = " + e.getMessage());
+                                    // todo: some type of invite failed notification/label
                                 }
                             });
                         }
