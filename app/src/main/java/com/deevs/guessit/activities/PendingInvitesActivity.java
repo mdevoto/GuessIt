@@ -9,6 +9,7 @@ import com.shephertz.app42.paas.sdk.android.App42CallBack;
 import com.shephertz.app42.paas.sdk.android.message.Queue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class PendingInvitesActivity extends Activity {
 
@@ -21,14 +22,16 @@ public class PendingInvitesActivity extends Activity {
             @Override
             public void onSuccess(Object response) {
                 Queue queue  = (Queue)response;
-                System.out.println("queueName is " + queue.getQueueName());
-                System.out.println("queueType is " + queue.getQueueType());
-                ArrayList<Queue.Message> messageList = queue.getMessageList();
+                Log.e(TAG, "queueName is " + queue.getQueueName());
+                Log.e(TAG, "queueType is " + queue.getQueueType());
+
+                // Create a unique hash-set which removes duplicates
+                HashSet<Queue.Message> messageList = new HashSet<Queue.Message>(queue.getMessageList());
                 for(Queue.Message message : messageList)
                 {
-                    System.out.println("correlationId is " + message.getCorrelationId());
-                    System.out.println("messageId is " + message.getMessageId());
-                    System.out.println("payLoad is " + message.getPayLoad());
+                    Log.e(TAG, "correlationId is " + message.getCorrelationId());
+                    Log.e(TAG, "messageId is " + message.getMessageId());
+                    Log.e(TAG, "payLoad is " + message.getPayLoad());
                 }
             }
 

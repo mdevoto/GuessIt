@@ -14,4 +14,9 @@
     <string name="invite">Invite</string>
     <string name="game">Game</string>
     <string name="game_channel_desc">Game Session Channel</string>
+
+    <!-- Pending Invites activity strings -->
+    <string name="invitations_header">Invitations</string>
+    <string name="accept_invitation">Accept</string>
+    <string name="decline_invitation">X</string>
 </resources>
