@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/pending_invite_loading"
+        android:orientation="vertical"
+        android:background="@color/mainTextBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        style="@style/activity_padding">
+
+        <com.deevs.guessit.views.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:font="Roboto-Black.ttf"
+            android:text="Doing stuff..."
+            android:textSize="32dp"
+            android:gravity="center"
+            style="@style/text_loading"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/pending_invite_content"
+        android:background="@color/mainTextBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <com.deevs.guessit.views.TypefaceTextView
+            android:id="@+id/pending_invite_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/invitations_header"
+            android:textColor="@color/mainBackground"
+            android:textSize="32dp"
+            app:font="Roboto-Regular.ttf"
+            android:padding="6dp"
+            android:layout_marginStart="22dp"/>
+
+        <!-- Parent container for current lobby -->
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/mainBackground"
+            android:id="@+id/invitation_list"
+            android:layout_below="@id/pending_invite_header">
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+</LinearLayout>
