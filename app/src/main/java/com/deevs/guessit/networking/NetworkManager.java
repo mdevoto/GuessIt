@@ -170,7 +170,7 @@ public enum NetworkManager {
     private void setupPushService(final NetworkManagerInitListener listener) {
         mPushService = App42API.buildPushNotificationService();
         mPushService.createChannelForApp(
-                getGameChannelName(getAccessToken().getUserId()),
+                getGameChannelName(mPlayerName, getAccessToken().getUserId()),
                 mContext.getString(R.string.game_channel_desc),
                 new App42CallBack() {
                     @Override
@@ -273,7 +273,7 @@ public enum NetworkManager {
         checkInitialized();
         mQueueService.sendMessage(
                 inviteQueueName,
-                getGameChannelName(getAccessToken().getUserId()),
+                getGameChannelName(inviteQueueName.substring(0, inviteQueueName.indexOf('_')), getAccessToken().getUserId()),
                 3600000,
                 new App42CallBack() {
                     @Override
@@ -301,12 +301,14 @@ public enum NetworkManager {
     }
 
     public String getInviteQueueName(final String name, final String id) {
-        return Utils.removeSpacesAndTabs(new StringBuilder(name)
+        return Utils.removeSpacesAndTabs(new StringBuilder(name + "_")
                 .append(id)
                 .append(mContext.getString(R.string.invite)).toString());
     }
 
-    public String getGameChannelName(final String friendId) {
-        return Utils.removeSpacesAndTabs(new StringBuilder(friendId).append(mContext.getString(R.string.game)).toString());
+    public String getGameChannelName(final String playerName, final String friendId) {
+        return Utils.removeSpacesAndTabs(new StringBuilder(friendId)
+                .append(mContext.getString(R.string.game))
+                .append("_" + playerName).toString());
     }
 }
