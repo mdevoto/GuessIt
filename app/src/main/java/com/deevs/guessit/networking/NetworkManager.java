@@ -52,15 +52,15 @@ public enum NetworkManager {
     /**
      * Message/Queue Service Error and Application Codes
      **/
-    private final int QUEUE_BAD_REQUEST             = 1400; // The Request parameters are invalid.
-    private final int QUEUE_UNAUTHORIZED_CLIENT     = 1401; // Client is not authorized.
-    private final int QUEUE_INTERNAL_SERVER_ERROR   = 1500; // Internal Server Error. Please try again.
-    private final int QUEUE_NOT_FOUND               = 2400; // Queue with the name '@queueName' not found.
-    private final int QUEUE_NOT_FOUND_EMPTY         = 2401; // Queue with the name '@queueName' does not have any messages.
-    private final int QUEUE_NOT_FOUND_EMPTY_ID      = 2402; // Queue with the name '@queueName' and correlationId '@correlationId' does not have any messages.
-    private final int QUEUE_NOT_FOUND_EXISTS        = 2403; // Queue by the name '@queueName' already exists.
-    private final int QUEUE_INVALID_PARAMS          = 2404; // The request parameters are invalid. This action is only applicable for PULL type queue.
-    private final int QUEUE_NOT_FOUND_PENDING_EMPTY = 2405; // Queue with the name '@queueName' does not have any pending messages.
+    public final int QUEUE_BAD_REQUEST             = 1400; // The Request parameters are invalid.
+    public final int QUEUE_UNAUTHORIZED_CLIENT     = 1401; // Client is not authorized.
+    public final int QUEUE_INTERNAL_SERVER_ERROR   = 1500; // Internal Server Error. Please try again.
+    public final int QUEUE_NOT_FOUND               = 2400; // Queue with the name '@queueName' not found.
+    public final int QUEUE_NOT_FOUND_EMPTY         = 2401; // Queue with the name '@queueName' does not have any messages.
+    public final int QUEUE_NOT_FOUND_EMPTY_ID      = 2402; // Queue with the name '@queueName' and correlationId '@correlationId' does not have any messages.
+    public final int QUEUE_NOT_FOUND_EXISTS        = 2403; // Queue by the name '@queueName' already exists.
+    public final int QUEUE_INVALID_PARAMS          = 2404; // The request parameters are invalid. This action is only applicable for PULL type queue.
+    public final int QUEUE_NOT_FOUND_PENDING_EMPTY = 2405; // Queue with the name '@queueName' does not have any pending messages.
 
     /**
      * Push Notifcation application error codes

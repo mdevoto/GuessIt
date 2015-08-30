@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">GuessIt</string>
 
+    <!-- Main menu strings -->
+    <string name="menu_error_occurred">Oops! An error occurred</string>
+
     <!-- Facebook related strings -->
     <string name="facebook_app_id">1137966712884548</string>
     <string name="facebook_login_text">Log in with Facebook</string>

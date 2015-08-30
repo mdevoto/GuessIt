@@ -12,6 +12,7 @@ import com.deevs.guessit.R;
 import com.deevs.guessit.adapters.PendingInvitesRecycclerAdapter;
 import com.deevs.guessit.networking.NetworkManager;
 import com.shephertz.app42.paas.sdk.android.App42CallBack;
+import com.shephertz.app42.paas.sdk.android.App42NotFoundException;
 import com.shephertz.app42.paas.sdk.android.message.Queue;
 
 import java.util.ArrayList;
@@ -73,6 +74,12 @@ public class PendingInvitesActivity extends Activity {
             @Override
             public void onException(Exception e) {
                 Log.e(TAG, "Exception Message" + e.getMessage());
+
+                // If this exception is an empty message queue exception we can finish loading
+                // and just show an empty list.
+                if(e instanceof App42NotFoundException
+                        && ((App42NotFoundException) e).getAppErrorCode() == NetworkManager.INSTANCE.QUEUE_NOT_FOUND_PENDING_EMPTY) {
+                }
             }
         });
     }

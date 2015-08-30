@@ -8,6 +8,28 @@
     android:background="@color/mainBackground">
 
     <LinearLayout
+        android:id="@+id/main_menu_loading_stuff"
+        android:orientation="vertical"
+        android:background="@color/mainTextBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        style="@style/activity_padding"
+        android:visibility="gone">
+
+        <com.deevs.guessit.views.TypefaceTextView
+            android:id="@+id/main_menu_loading_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:font="Roboto-Black.ttf"
+            android:text="Doing stuff..."
+            android:textSize="32dp"
+            android:gravity="center"
+            style="@style/text_loading"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_menu_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
