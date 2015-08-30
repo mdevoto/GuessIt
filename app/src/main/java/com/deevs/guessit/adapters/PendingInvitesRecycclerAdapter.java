@@ -89,7 +89,7 @@ public class PendingInvitesRecycclerAdapter extends RecyclerView.Adapter<Pending
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         // Get element from your data set at this position and replace the contents of the view
         // with that element.
-        viewHolder.getText().setText(mInviteList.get(position - 1).getPayLoad());
+        viewHolder.getText().setText(mInviteList.get(position).getPayLoad());
     }
 
     @Override
