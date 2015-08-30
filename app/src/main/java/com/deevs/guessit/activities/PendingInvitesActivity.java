@@ -23,7 +23,7 @@ public class PendingInvitesActivity extends Activity {
     public static final String TAG = PendingInvitesActivity.class.getSimpleName();
 
     private RecyclerView.LayoutManager mLayoutMgr;
-    private RecyclerView mLobbyRecyclerView;
+    private RecyclerView mInviteRecycler;
     private PendingInvitesRecycclerAdapter mAdapter;
 
     @Override
@@ -32,14 +32,14 @@ public class PendingInvitesActivity extends Activity {
         setContentView(R.layout.activity_pending_invites);
 
         // Setup the Recycler list for game invites once loading is done
-        mLobbyRecyclerView = (RecyclerView) findViewById(R.id.pending_invite_list);
-        mLobbyRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mInviteRecycler = (RecyclerView) findViewById(R.id.pending_invite_list);
+        mInviteRecycler.setItemAnimator(new DefaultItemAnimator());
 
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
         // elements are laid out.
         mLayoutMgr = new LinearLayoutManager(this);
-        mLobbyRecyclerView.setLayoutManager(mLayoutMgr);
+        mInviteRecycler.setLayoutManager(mLayoutMgr);
 
         NetworkManager.INSTANCE.getGameInvitations(new App42CallBack() {
             @Override
@@ -47,7 +47,7 @@ public class PendingInvitesActivity extends Activity {
                 Queue queue  = (Queue)response;
 
                 mAdapter = new PendingInvitesRecycclerAdapter(getApplicationContext(), queue.getMessageList());
-                mLobbyRecyclerView.setAdapter(mAdapter);
+                mInviteRecycler.setAdapter(mAdapter);
 
                 // todo: make this an animation..like fade?
                 // todo: Run on ui thread safe?
