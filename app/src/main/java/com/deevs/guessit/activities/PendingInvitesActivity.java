@@ -1,6 +1,7 @@
 package com.deevs.guessit.activities;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,13 +51,7 @@ public class PendingInvitesActivity extends Activity {
 
                 // todo: make this an animation..like fade?
                 // todo: Run on ui thread safe?
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        findViewById(R.id.pending_invite_loading).setVisibility(ViewGroup.GONE);
-                        findViewById(R.id.pending_invite_content).setVisibility(ViewGroup.VISIBLE);
-                    }
-                });
+                setLoadingAndMenuVisibilities(ViewGroup.GONE, ViewGroup.VISIBLE);
 
                 Log.e(TAG, "queueName is " + queue.getQueueName());
                 Log.e(TAG, "queueType is " + queue.getQueueType());
@@ -79,8 +74,27 @@ public class PendingInvitesActivity extends Activity {
                 // and just show an empty list.
                 if(e instanceof App42NotFoundException
                         && ((App42NotFoundException) e).getAppErrorCode() == NetworkManager.INSTANCE.QUEUE_NOT_FOUND_PENDING_EMPTY) {
+                    setLoadingAndMenuVisibilities(ViewGroup.GONE, ViewGroup.VISIBLE);
                 }
             }
         });
+    }
+
+    private void setLoadingAndMenuVisibilities(final int loadingVis, final int contentVis) {
+        final AsyncTask<Void, Void, Void> visTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                return null;
+            }
+
+            // Here the code runs on the UI thread..do visibility from here..
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                findViewById(R.id.pending_invite_loading).setVisibility(loadingVis);
+                findViewById(R.id.pending_invite_content).setVisibility(contentVis);
+            }
+        };
+        visTask.execute();
     }
 }
