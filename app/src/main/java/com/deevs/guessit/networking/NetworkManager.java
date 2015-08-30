@@ -192,6 +192,17 @@ public enum NetworkManager {
 
                     @Override
                     public void onException(Exception e) {
+                        // Check if this is an App42 Exception, if so, we can handle the response.
+                        if (e instanceof App42BadParameterException) {
+                            final App42BadParameterException badParamExc = (App42BadParameterException) e;
+
+                            // If this exception is thrown for channel already exists, it means
+                            // that the application has already been run before
+                            if (badParamExc.getAppErrorCode() == PUSH_CHANNEL_EXISTS) {
+                                initSuccess(listener);
+                                return;
+                            }
+                        }
                         initFailed(listener, e.getMessage());
                     }
         });

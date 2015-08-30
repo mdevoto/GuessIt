@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/mainBackground"
-            android:id="@+id/invitation_list"
+            android:id="@+id/pending_invite_list"
             android:layout_below="@id/pending_invite_header">
         </android.support.v7.widget.RecyclerView>
     </RelativeLayout>
