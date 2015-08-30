@@ -94,6 +94,6 @@ public class PendingInvitesRecycclerAdapter extends RecyclerView.Adapter<Pending
 
     @Override
     public int getItemCount() {
-        return mInviteList.size() + 1;
+        return mInviteList.size();
     }
 }
