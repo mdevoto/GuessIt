@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/mainTextBackground"
     android:weightSum="1">
 
     <com.deevs.guessit.views.TypefaceTextView
