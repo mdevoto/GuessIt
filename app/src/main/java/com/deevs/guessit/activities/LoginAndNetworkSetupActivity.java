@@ -43,8 +43,7 @@ public class LoginAndNetworkSetupActivity extends Activity {
             public void onSuccess(LoginResult loginResult) {
                 Log.e(TAG, "onSuccess - Facebook Login success. User ID = " + loginResult.getAccessToken().getUserId());
 
-                // TODO: Fade out login button?
-                mLoginBtn.setVisibility(View.INVISIBLE);
+                // TODO: Fade out entire ui for loading..
 
                 // Login success - Start the main menu now.
                 final Intent startGameSetup = new Intent(getApplicationContext(), LoadingGameActivity.class);

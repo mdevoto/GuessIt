@@ -175,16 +175,15 @@ public enum NetworkManager {
                 new App42CallBack() {
                     @Override
                     public void onSuccess(Object response) {
-                        PushNotification pushNotification  = (PushNotification)response;
+                        PushNotification pushNotification = (PushNotification) response;
 
                         Log.e(TAG, "push message = " + pushNotification.getMessage()
                                 + " channel list size = " + pushNotification.getChannelList().size());
 
                         ArrayList<PushNotification.Channel> channelList = pushNotification.getChannelList();
-                        for(PushNotification.Channel channelObj : channelList)
-                        {
+                        for (PushNotification.Channel channelObj : channelList) {
                             System.out.println("channelName is " + channelObj.getName());
-                            System.out.println("Description is " +  channelObj.getDescription());
+                            System.out.println("Description is " + channelObj.getDescription());
                         }
 
                         initSuccess(listener);
@@ -205,7 +204,7 @@ public enum NetworkManager {
                         }
                         initFailed(listener, e.getMessage());
                     }
-        });
+                });
     }
 
     public boolean isNetworkAvailable(final Context context) {
@@ -284,7 +283,7 @@ public enum NetworkManager {
         checkInitialized();
         mQueueService.sendMessage(
                 inviteQueueName,
-                getGameChannelName(inviteQueueName.substring(0, inviteQueueName.indexOf('_')), getAccessToken().getUserId()),
+                getGameChannelName(mPlayerName, getAccessToken().getUserId()),
                 3600000,
                 new App42CallBack() {
                     @Override
@@ -321,5 +320,13 @@ public enum NetworkManager {
         return Utils.removeSpacesAndTabs(new StringBuilder(friendId)
                 .append(mContext.getString(R.string.game))
                 .append("_" + playerName).toString());
+    }
+
+    public void subscribeToGameChannel(final String channelName, final App42CallBack callback) {
+        mPushService.subscribeToChannel(channelName, mPlayerName, callback);
+    }
+
+    public void unsubscribeToGameChannel(final String channelName, final App42CallBack callback) {
+        mPushService.unsubscribeFromChannel(channelName, mPlayerName, callback);
     }
 }

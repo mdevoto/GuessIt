@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.deevs.guessit.R;
+import com.deevs.guessit.networking.NetworkManager;
 import com.deevs.guessit.views.TypefaceTextView;
 import com.shephertz.app42.paas.sdk.android.message.Queue;
 
@@ -44,6 +45,7 @@ public class PendingInvitesRecycclerAdapter extends RecyclerView.Adapter<Pending
                 public void onClick(View view) {
                     // todo - extract channel name from payload message
                     // todo - accept invitation and join/subscribe to channel name
+                    //NetworkManager.INSTANCE.subscribeToGameChannel();
                 }
             });
 
@@ -89,7 +91,8 @@ public class PendingInvitesRecycclerAdapter extends RecyclerView.Adapter<Pending
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         // Get element from your data set at this position and replace the contents of the view
         // with that element.
-        viewHolder.getText().setText(mInviteList.get(position).getPayLoad());
+        final String inviteMessage = mInviteList.get(position).getPayLoad();
+        viewHolder.getText().setText(inviteMessage.substring(inviteMessage.indexOf("_") + 1));
     }
 
     @Override
